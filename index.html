@@ -2,280 +2,353 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b0e">
 
-<title>GTA RP WEB</title>
+<title>GTA RP</title>
 
-<!-- ОБЩИЕ СТИЛИ -->
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/auth.css">
-<link rel="stylesheet" href="css/game.css">
-<link rel="stylesheet" href="css/mobile.css">
+<link rel="stylesheet" href="style.css">
 
 <style>
-/* =========================================================
-   GTA RP WEB
-   INDEX / LAUNCHER
-========================================================= */
 
-:root{
-    --green:#4cff72;
-    --green-dark:#173c22;
-    --bg:#07090c;
-    --panel:#11151b;
-    --panel2:#171c23;
-    --border:#303740;
-    --text:#ffffff;
-    --muted:#89929e;
-    --danger:#ff4d5a;
-}
+/* =========================================================
+   GTA RP — INDEX
+========================================================= */
 
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
 }
 
 html,
 body{
+    margin:0;
     width:100%;
-    height:100%;
+    min-height:100%;
+    background:#080b0e;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
 }
+
+button,
+input{
+    font:inherit;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
 
 body{
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    background:var(--bg);
-    color:var(--text);
-
     overflow:hidden;
 }
+
+.background{
+    position:fixed;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(55,75,63,.20),
+            transparent 40%
+        ),
+        linear-gradient(
+            135deg,
+            #080b0e 0%,
+            #10151a 48%,
+            #080b0e 100%
+        );
+
+    z-index:0;
+}
+
+.background::before{
+    content:"";
+
+    position:absolute;
+    inset:-20%;
+
+    background:
+        linear-gradient(
+            115deg,
+            transparent 20%,
+            rgba(255,255,255,.025) 20.1%,
+            transparent 20.3%
+        );
+
+    background-size:80px 80px;
+
+    transform:rotate(-8deg);
+
+    opacity:.35;
+}
+
+.background::after{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 25%,
+            rgba(0,0,0,.65) 100%
+        );
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    z-index:2;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top{
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:68px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 34px;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+    background:
+        rgba(7,10,13,.78);
+
+    backdrop-filter:blur(14px);
+
+    z-index:10;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:1000;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#61e77f;
+}
+
+.server-status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:#77818a;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#61e77f;
+
+    box-shadow:
+        0 0 12px rgba(97,231,127,.65);
+}
+
 
 /* =========================================================
    SCREENS
 ========================================================= */
 
 .screen{
-    position:fixed;
-    inset:0;
-
     display:none;
 
-    width:100%;
-    height:100%;
+    width:min(520px,calc(100vw - 30px));
+
+    animation:
+        screenIn .25s ease;
 }
 
 .screen.active{
-    display:flex;
+    display:block;
 }
 
-/* =========================================================
-   LOADING
-========================================================= */
-
-#loading{
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            #1e2d25 0%,
-            #0a0d11 48%,
-            #050608 100%
-        );
-}
-
-.loading-logo{
-    font-size:58px;
-    font-weight:900;
-    letter-spacing:6px;
-}
-
-.loading-logo span{
-    color:var(--green);
-}
-
-.loading-subtitle{
-    margin-top:10px;
-
-    color:#818b98;
-
-    font-size:12px;
-    letter-spacing:5px;
-}
-
-.loading-status{
-    margin-top:30px;
-
-    color:#747e8a;
-
-    font-size:12px;
-}
-
-.loading-line{
-    width:260px;
-    height:4px;
-
-    margin-top:15px;
-
-    background:#252a30;
-
-    border-radius:10px;
-
-    overflow:hidden;
-}
-
-.loading-progress{
-    width:35%;
-    height:100%;
-
-    background:var(--green);
-
-    animation:loading 1.3s infinite;
-}
-
-@keyframes loading{
+@keyframes screenIn{
 
     from{
-        transform:translateX(-130%);
+        opacity:0;
+        transform:translateY(8px);
     }
 
     to{
-        transform:translateX(400%);
+        opacity:1;
+        transform:translateY(0);
     }
 
 }
 
-/* =========================================================
-   CENTER
-========================================================= */
-
-.center{
-    width:100%;
-    height:100%;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-}
 
 /* =========================================================
    PANEL
 ========================================================= */
 
 .panel{
-    width:min(460px,100%);
 
-    padding:30px;
+    border:1px solid #252d33;
+
+    border-radius:14px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(22,27,34,.98),
-            rgba(12,15,20,.98)
+            rgba(21,27,32,.96),
+            rgba(11,15,18,.96)
         );
 
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
     box-shadow:
-        0 30px 100px rgba(0,0,0,.65);
+        0 25px 80px rgba(0,0,0,.55);
+
+    overflow:hidden;
 }
 
-.title{
-    font-size:28px;
-    font-weight:800;
+.panel-head{
+    padding:28px 30px 22px;
+
+    border-bottom:1px solid #20272d;
 }
 
-.subtitle{
+.panel-kicker{
+    color:#61e77f;
+
+    font-size:8px;
+    font-weight:1000;
+
+    letter-spacing:2px;
+}
+
+.panel-title{
+    margin-top:8px;
+
+    font-size:27px;
+    font-weight:1000;
+
+    letter-spacing:-.5px;
+}
+
+.panel-subtitle{
     margin-top:7px;
 
-    color:var(--muted);
+    color:#707b84;
 
-    font-size:13px;
+    font-size:10px;
+
+    line-height:1.5;
 }
+
 
 /* =========================================================
-   SERVER SCREEN
+   SERVER
 ========================================================= */
 
-#servers{
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            #1b3022,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            #16201a,
-            transparent 40%
-        ),
-        #080a0e;
-}
-
 .server-list{
-    margin-top:25px;
+    padding:18px;
 }
 
 .server-card{
 
-    display:flex;
+    width:100%;
 
+    padding:18px;
+
+    display:flex;
     align-items:center;
 
     gap:15px;
 
-    padding:16px;
+    border:1px solid #283139;
 
-    background:#0e1217;
+    border-radius:10px;
 
-    border:1px solid #303740;
+    background:#10151a;
 
-    border-radius:12px;
+    color:#fff;
 
-    transition:.2s;
+    cursor:pointer;
+
+    text-align:left;
+
+    transition:.15s;
 }
 
 .server-card:hover{
-    border-color:var(--green);
+    border-color:#476052;
 
-    background:#11171a;
+    background:#141b17;
+
+    transform:translateY(-1px);
+}
+
+.server-card.selected{
+    border-color:#61e77f;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(97,231,127,.10),
+            rgba(97,231,127,.025)
+        );
+
+    box-shadow:
+        inset 3px 0 0 #61e77f;
 }
 
 .server-number{
 
-    width:50px;
-    height:50px;
+    width:48px;
+    height:48px;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
     flex-shrink:0;
 
-    background:#19221b;
+    border:1px solid #374149;
 
-    border:1px solid #314936;
+    border-radius:9px;
 
-    border-radius:10px;
+    background:#0a0e11;
 
-    color:var(--green);
+    color:#61e77f;
 
-    font-size:22px;
-    font-weight:900;
+    font-size:17px;
+    font-weight:1000;
 }
 
 .server-info{
@@ -283,304 +356,356 @@ body{
 }
 
 .server-name{
-    font-size:15px;
-    font-weight:800;
+    font-size:13px;
+    font-weight:1000;
 }
 
-.server-description{
-    margin-top:4px;
+.server-desc{
+    margin-top:5px;
 
-    color:#78828e;
+    color:#707a82;
 
-    font-size:12px;
+    font-size:8px;
 }
 
-.server-status{
-
-    margin-top:6px;
-
-    color:var(--green);
-
-    font-size:11px;
+.server-right{
+    text-align:right;
 }
 
-.server-play{
+.online{
+    color:#61e77f;
 
-    padding:11px 15px;
+    font-size:8px;
+    font-weight:900;
+}
 
-    border:0;
+.server-ip{
+    margin-top:5px;
+
+    color:#59636b;
+
+    font-size:7px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.main-button{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:14px 18px;
+
+    border:1px solid #61e77f;
 
     border-radius:8px;
 
-    background:var(--green);
+    background:#61e77f;
 
-    color:#061009;
-
-    font-weight:900;
+    color:#07100a;
 
     cursor:pointer;
+
+    font-size:10px;
+    font-weight:1000;
+
+    letter-spacing:.8px;
+
+    transition:.15s;
 }
 
-.server-play:hover{
+.main-button:hover{
     filter:brightness(1.08);
 }
+
+.main-button:disabled{
+
+    opacity:.3;
+
+    cursor:not-allowed;
+
+    filter:none;
+}
+
+.secondary-button{
+
+    width:100%;
+
+    margin-top:8px;
+
+    padding:12px;
+
+    border:1px solid #303940;
+
+    border-radius:8px;
+
+    background:#14191e;
+
+    color:#aab2b9;
+
+    cursor:pointer;
+
+    font-size:9px;
+    font-weight:900;
+}
+
+.secondary-button:hover{
+    background:#1a2025;
+    color:#fff;
+}
+
 
 /* =========================================================
    AUTH
 ========================================================= */
 
-#auth{
-    background:
-        radial-gradient(
-            circle at 70% 25%,
-            #1c3123,
-            transparent 45%
-        ),
-        #080a0e;
+.auth-body{
+    padding:25px 30px 30px;
 }
 
-.auth-top{
+.auth-account{
 
     display:flex;
-
-    align-items:flex-start;
-
-    justify-content:space-between;
-}
-
-.back-button{
-
-    border:0;
-
-    background:none;
-
-    color:#89929e;
-
-    cursor:pointer;
-
-    font-size:13px;
-}
-
-.back-button:hover{
-    color:white;
-}
-
-.server-selected{
-
-    margin-top:6px;
-
-    color:var(--green);
-
-    font-size:12px;
-}
-
-/* =========================================================
-   TABS
-========================================================= */
-
-.tabs{
-
-    display:flex;
-
-    gap:5px;
-
-    margin-top:25px;
-
-    padding:4px;
-
-    background:#090c10;
-
-    border-radius:10px;
-}
-
-.tab{
-
-    flex:1;
-
-    padding:11px;
-
-    border:0;
-
-    border-radius:7px;
-
-    background:transparent;
-
-    color:#7e8793;
-
-    cursor:pointer;
-}
-
-.tab.active{
-
-    background:#242a31;
-
-    color:white;
-}
-
-/* =========================================================
-   FORM
-========================================================= */
-
-.form{
-    display:none;
-
-    margin-top:20px;
-}
-
-.form.active{
-    display:block;
-}
-
-.field{
-    margin-top:15px;
-}
-
-.field label{
-
-    display:block;
-
-    margin-bottom:7px;
-
-    color:#89929e;
-
-    font-size:12px;
-}
-
-.field input{
-
-    width:100%;
-
-    padding:13px;
-
-    border:1px solid #303740;
-
-    border-radius:9px;
-
-    outline:none;
-
-    background:#090c10;
-
-    color:white;
-}
-
-.field input:focus{
-    border-color:var(--green);
-}
-
-.primary-button{
-
-    width:100%;
-
-    margin-top:20px;
+    align-items:center;
+    gap:12px;
 
     padding:14px;
 
-    border:0;
+    border:1px solid #293139;
 
     border-radius:9px;
 
-    background:var(--green);
-
-    color:#071009;
-
-    font-weight:900;
-
-    cursor:pointer;
-}
-
-.primary-button:hover{
-    filter:brightness(1.08);
-}
-
-.info{
-
-    margin-top:15px;
-
-    padding:11px;
-
-    background:#0b0f13;
-
-    border:1px solid #252c33;
-
-    border-radius:8px;
-
-    color:#7f8995;
-
-    font-size:12px;
-
-    line-height:1.5;
-}
-
-.info strong{
-    color:white;
-}
-
-/* =========================================================
-   ACCOUNT
-========================================================= */
-
-.account-preview{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-top:20px;
-
-    padding:13px;
-
-    background:#0b0f13;
-
-    border:1px solid #2b323a;
-
-    border-radius:10px;
+    background:#0d1216;
 }
 
 .avatar{
 
-    width:42px;
-    height:42px;
+    width:43px;
+    height:43px;
 
     display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#1a2920;
+
+    border:1px solid #385641;
+
+    color:#61e77f;
+
+    font-size:16px;
+    font-weight:1000;
+}
+
+.account-info{
+    flex:1;
+}
+
+.account-label{
+    color:#68737c;
+
+    font-size:7px;
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+.account-name{
+
+    margin-top:5px;
+
+    font-size:12px;
+    font-weight:1000;
+}
+
+.account-state{
+
+    color:#61e77f;
+
+    font-size:7px;
+    font-weight:900;
+}
+
+.auth-note{
+
+    margin-top:13px;
+
+    color:#66717a;
+
+    font-size:8px;
+
+    line-height:1.5;
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   REGISTER
+========================================================= */
+
+.input-group{
+    margin-bottom:12px;
+}
+
+.input-label{
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#78838c;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:.5px;
+}
+
+.input{
+
+    width:100%;
+
+    padding:13px;
+
+    border:1px solid #2b343b;
+
+    border-radius:8px;
+
+    outline:none;
+
+    background:#0c1115;
+
+    color:#fff;
+
+    font-size:10px;
+}
+
+.input:focus{
+    border-color:#52685a;
+}
+
+.input::placeholder{
+    color:#4e5860;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    position:fixed;
+
+    left:0;
+    right:0;
+    bottom:17px;
+
+    text-align:center;
+
+    color:#414b53;
+
+    font-size:7px;
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    z-index:5;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
 
     align-items:center;
     justify-content:center;
 
-    background:#19231c;
+    flex-direction:column;
 
-    border-radius:9px;
+    background:#080b0e;
 
-    font-size:20px;
+    z-index:100;
 }
 
-.account-name{
-    font-weight:800;
+.loading.active{
+    display:flex;
 }
 
-.account-status{
-    margin-top:3px;
+.loader-logo{
 
-    color:var(--green);
-
-    font-size:11px;
+    font-size:30px;
+    font-weight:1000;
+    letter-spacing:3px;
 }
 
-/* =========================================================
-   ERROR
-========================================================= */
-
-.message{
-
-    min-height:18px;
-
-    margin-top:12px;
-
-    color:#ff6973;
-
-    font-size:12px;
+.loader-logo span{
+    color:#61e77f;
 }
+
+.loader-text{
+
+    margin-top:15px;
+
+    color:#626c74;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:2px;
+}
+
+.loader-line{
+
+    width:180px;
+    height:2px;
+
+    margin-top:13px;
+
+    background:#1b2328;
+
+    overflow:hidden;
+}
+
+.loader-line span{
+
+    display:block;
+
+    width:40%;
+    height:100%;
+
+    background:#61e77f;
+
+    animation:
+        loading 1s infinite ease-in-out;
+}
+
+@keyframes loading{
+
+    0%{
+        transform:translateX(-100%);
+    }
+
+    100%{
+        transform:translateX(350%);
+    }
+
+}
+
 
 /* =========================================================
    RESPONSIVE
@@ -588,488 +713,845 @@ body{
 
 @media(max-width:600px){
 
-    .panel{
-        padding:22px;
+    .top{
+        height:58px;
+        padding:0 18px;
     }
 
-    .loading-logo{
-        font-size:40px;
+    .logo{
+        font-size:18px;
+    }
+
+    .server-status{
+        font-size:7px;
+    }
+
+    .panel-head{
+        padding:23px 21px 19px;
+    }
+
+    .panel-title{
+        font-size:23px;
+    }
+
+    .auth-body{
+        padding:20px 21px 23px;
+    }
+
+    .server-list{
+        padding:12px;
     }
 
     .server-card{
-        padding:13px;
+        padding:14px;
     }
 
     .server-number{
-        width:43px;
-        height:43px;
-    }
-
-    .server-play{
-        padding:10px;
-        font-size:11px;
+        width:42px;
+        height:42px;
     }
 
 }
+
 </style>
 </head>
 
+
 <body>
 
+
 <!-- =======================================================
-     LOADING
-======================================================= -->
+     BACKGROUND
+======================================================== -->
 
-<section id="loading" class="screen active">
+<div class="background"></div>
 
-    <div class="loading-logo">
+
+<!-- =======================================================
+     HEADER
+======================================================== -->
+
+<header class="top">
+
+    <div class="logo">
         GTA <span>RP</span>
     </div>
 
-    <div class="loading-subtitle">
-        WEB ROLEPLAY
+    <div class="server-status">
+
+        <span class="status-dot"></span>
+
+        СИСТЕМА ОНЛАЙН
+
     </div>
 
-    <div class="loading-status" id="loadingStatus">
-        Подключение к игровому центру...
-    </div>
-
-    <div class="loading-line">
-        <div class="loading-progress"></div>
-    </div>
-
-</section>
+</header>
 
 
 <!-- =======================================================
-     SERVER SELECTION
-======================================================= -->
+     APP
+======================================================== -->
 
-<section id="servers" class="screen">
+<div class="app">
 
-    <div class="center">
+
+    <!-- ===================================================
+         SERVER SELECT
+    ==================================================== -->
+
+    <section
+        id="serverScreen"
+        class="screen active"
+    >
 
         <div class="panel">
 
-            <div class="title">
-                Выбор сервера
-            </div>
+            <div class="panel-head">
 
-            <div class="subtitle">
-                Выберите сервер для продолжения
+                <div class="panel-kicker">
+                    GTA ROLEPLAY
+                </div>
+
+                <div class="panel-title">
+                    Выбор сервера
+                </div>
+
+                <div class="panel-subtitle">
+                    Выберите сервер, на котором хотите играть.
+                </div>
+
             </div>
 
 
             <div class="server-list">
 
-                <div class="server-card">
+
+                <button
+                    class="server-card selected"
+                    id="server1"
+                    onclick="selectServer(1)"
+                >
 
                     <div class="server-number">
                         1
                     </div>
 
+
                     <div class="server-info">
 
                         <div class="server-name">
-                            GTA RP WEB #1
+                            GTA RP — SERVER 1
                         </div>
 
-                        <div class="server-description">
+                        <div class="server-desc">
                             Основной игровой сервер
-                        </div>
-
-                        <div class="server-status">
-                            ● Работает
                         </div>
 
                     </div>
 
-                    <button
-                        class="server-play"
-                        onclick="selectServer(1)"
-                    >
-                        ИГРАТЬ
-                    </button>
 
-                </div>
+                    <div class="server-right">
 
-            </div>
+                        <div class="online">
+                            ● ONLINE
+                        </div>
+
+                        <div class="server-ip">
+                            SERVER #1
+                        </div>
+
+                    </div>
+
+                </button>
 
 
-            <div class="info">
+                <button
+                    class="main-button"
+                    onclick="continueFromServer()"
+                >
+                    ПРОДОЛЖИТЬ
+                </button>
 
-                <strong>Сервер №1</strong><br>
-
-                Пока доступен только один сервер.
-                В будущем сюда можно добавить
-                дополнительные сервера.
 
             </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =======================================================
-     AUTH
-======================================================= -->
 
-<section id="auth" class="screen">
+    <!-- ===================================================
+         LOGIN
+    ==================================================== -->
 
-    <div class="center">
+    <section
+        id="loginScreen"
+        class="screen"
+    >
 
         <div class="panel">
 
-            <div class="auth-top">
+            <div class="panel-head">
 
-                <div>
-
-                    <div class="title">
-                        Аккаунт
-                    </div>
-
-                    <div class="server-selected">
-                        ● GTA RP WEB #1
-                    </div>
-
+                <div class="panel-kicker">
+                    SERVER #1
                 </div>
 
-                <button
-                    class="back-button"
-                    onclick="backToServers()"
-                >
-                    ← Серверы
-                </button>
-
-            </div>
-
-
-            <div class="account-preview">
-
-                <div class="avatar">
-                    👤
+                <div class="panel-title">
+                    Вход в аккаунт
                 </div>
 
-                <div>
-
-                    <div class="account-name">
-                        Tomas_RP
-                    </div>
-
-                    <div class="account-status">
-                        Тестовый аккаунт
-                    </div>
-
+                <div class="panel-subtitle">
+                    Войдите в свой аккаунт GTA RP.
                 </div>
 
             </div>
 
 
-            <!-- TABS -->
+            <div class="auth-body">
 
-            <div class="tabs">
+
+                <div class="auth-account">
+
+                    <div class="avatar">
+                        T
+                    </div>
+
+                    <div class="account-info">
+
+                        <div class="account-label">
+                            АККАУНТ
+                        </div>
+
+                        <div
+                            class="account-name"
+                            id="loginAccountName"
+                        >
+                            Tomas_RP
+                        </div>
+
+                    </div>
+
+                    <div class="account-state">
+                        ГОТОВ
+                    </div>
+
+                </div>
+
 
                 <button
-                    id="loginTab"
-                    class="tab active"
-                    onclick="switchAuth('login')"
+                    class="main-button"
+                    onclick="login()"
                 >
-                    Вход
+                    ВОЙТИ В ИГРУ
                 </button>
 
+
                 <button
-                    id="registerTab"
-                    class="tab"
-                    onclick="switchAuth('register')"
+                    class="secondary-button"
+                    onclick="showScreen('registerScreen')"
                 >
+                    СОЗДАТЬ НОВЫЙ АККАУНТ
+                </button>
+
+
+                <button
+                    class="secondary-button"
+                    onclick="showScreen('serverScreen')"
+                >
+                    ← ВЫБОР СЕРВЕРА
+                </button>
+
+
+                <div class="auth-note">
+                    Сейчас используется автономный режим.
+                    Пароль временно не требуется.
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         REGISTER
+    ==================================================== -->
+
+    <section
+        id="registerScreen"
+        class="screen"
+    >
+
+        <div class="panel">
+
+            <div class="panel-head">
+
+                <div class="panel-kicker">
+                    SERVER #1
+                </div>
+
+                <div class="panel-title">
                     Регистрация
-                </button>
+                </div>
+
+                <div class="panel-subtitle">
+                    Создайте игровой аккаунт.
+                </div>
 
             </div>
 
 
-            <!-- LOGIN -->
+            <div class="auth-body">
 
-            <form
-                id="loginForm"
-                class="form active"
-                onsubmit="login(event)"
-            >
 
-                <div class="field">
+                <div class="input-group">
 
-                    <label>
-                        Логин
+                    <label class="input-label">
+                        ЛОГИН
                     </label>
 
                     <input
-                        id="login"
+                        id="registerLogin"
+                        class="input"
                         type="text"
                         value="Tomas_RP"
-                        autocomplete="username"
+                        maxlength="24"
                         placeholder="Введите логин"
                     >
 
                 </div>
 
 
-                <div class="info">
+                <div class="input-group">
 
-                    Тестовый аккаунт:
-
-                    <strong>Tomas_RP</strong>
-
-                    <br>
-
-                    Пароль пока не требуется.
-
-                </div>
-
-
-                <div
-                    id="loginMessage"
-                    class="message"
-                ></div>
-
-
-                <button
-                    class="primary-button"
-                    type="submit"
-                >
-                    ВОЙТИ
-                </button>
-
-            </form>
-
-
-            <!-- REGISTER -->
-
-            <form
-                id="registerForm"
-                class="form"
-                onsubmit="register(event)"
-            >
-
-                <div class="field">
-
-                    <label>
-                        Логин
+                    <label class="input-label">
+                        ИМЯ ПЕРСОНАЖА
                     </label>
 
                     <input
-                        id="registerLogin"
+                        id="registerName"
+                        class="input"
                         type="text"
-                        autocomplete="username"
-                        placeholder="Например: Tomas_RP"
+                        value="Tomas"
+                        maxlength="20"
+                        placeholder="Введите имя"
                     >
 
                 </div>
 
 
-                <div class="field">
+                <div class="input-group">
 
-                    <label>
-                        Пароль
+                    <label class="input-label">
+                        ФАМИЛИЯ ПЕРСОНАЖА
                     </label>
 
                     <input
-                        id="registerPassword"
-                        type="password"
-                        autocomplete="new-password"
-                        placeholder="Пароль пока необязателен"
+                        id="registerSurname"
+                        class="input"
+                        type="text"
+                        value="RP"
+                        maxlength="20"
+                        placeholder="Введите фамилию"
                     >
 
                 </div>
 
 
-                <div
-                    id="registerMessage"
-                    class="message"
-                ></div>
-
-
                 <button
-                    class="primary-button"
-                    type="submit"
+                    class="main-button"
+                    onclick="registerAccount()"
                 >
                     СОЗДАТЬ АККАУНТ
                 </button>
 
-            </form>
 
+                <button
+                    class="secondary-button"
+                    onclick="showScreen('loginScreen')"
+                >
+                    ← НАЗАД КО ВХОДУ
+                </button>
 
-            <div class="info">
-
-                Авторизация сейчас работает автономно.
-                Позже этот модуль можно подключить
-                к Supabase без изменения всей структуры проекта.
 
             </div>
 
         </div>
 
+    </section>
+
+
+</div>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================== -->
+
+<div class="footer">
+    GTA RP • SERVER #1 • AUTONOMOUS MODE
+</div>
+
+
+<!-- =======================================================
+     LOADING
+======================================================== -->
+
+<div
+    class="loading"
+    id="loading"
+>
+
+    <div class="loader-logo">
+        GTA <span>RP</span>
     </div>
 
-</section>
+    <div class="loader-text">
+        ПОДКЛЮЧЕНИЕ К SERVER #1
+    </div>
 
+    <div class="loader-line">
+        <span></span>
+    </div>
 
-<!-- =======================================================
-     DATA
-======================================================= -->
+</div>
 
-<script src="js/data.js"></script>
-
-<!-- =======================================================
-     AUTH
-======================================================= -->
-
-<script src="js/auth.js"></script>
-
-<!-- =======================================================
-     GAME
-======================================================= -->
-
-<script src="js/game.js"></script>
-
-<!-- =======================================================
-     MAP
-======================================================= -->
-
-<script src="js/map.js"></script>
-
-<!-- =======================================================
-     CHARACTER
-======================================================= -->
-
-<script src="js/character.js"></script>
-
-
-<!-- =======================================================
-     INDEX CORE
-======================================================= -->
 
 <script>
 
+/* =========================================================
+   GTA RP — INDEX LOGIC
+========================================================= */
+
 "use strict";
 
+
+/* =========================================================
+   STORAGE KEYS
+========================================================= */
+
+const AUTH_KEY =
+    "gta_rp_logged_in";
+
+const ACCOUNT_KEY =
+    "gta_rp_account";
+
+const SERVER_KEY =
+    "gta_rp_server";
+
+const CHARACTER_KEY =
+    "gta_rp_character";
+
+
+/* =========================================================
+   DEFAULT ACCOUNT
+========================================================= */
+
+const DEFAULT_ACCOUNT = {
+
+    account:"Tomas_RP",
+
+    name:"Tomas",
+
+    surname:"RP",
+
+    id:1,
+
+    level:1,
+
+    xp:350,
+
+    cash:15000,
+
+    bank:50000,
+
+    job:"Безработный",
+
+    hunger:82,
+
+    thirst:91,
+
+    vehicle:null
+
+};
+
+
+/* =========================================================
+   SERVER
+========================================================= */
+
+let selectedServer =
+    Number(
+        localStorage.getItem(
+            SERVER_KEY
+        )
+    ) || 1;
+
+
+/* =========================================================
+   AUTH CHECK
+========================================================= */
+
 /*
-=========================================================
-GTA RP WEB
-INDEX CORE
-=========================================================
+    САМОЕ ГЛАВНОЕ:
+
+    Если пользователь уже авторизован,
+    index.html больше НЕ показывает вход.
+
+    Сразу открывается game.html.
 */
 
-/* -------------------------------------------------------
-   STORAGE
-------------------------------------------------------- */
+function checkSession(){
 
-const STORAGE_KEY = "GTA_RP_WEB_ACCOUNT_DATA";
-
-
-/* -------------------------------------------------------
-   DEFAULT DATA
-------------------------------------------------------- */
-
-function getDefaultData(){
-
-    return {
-
-        server:null,
-
-        currentAccount:null,
-
-        accounts:{
-
-            "Tomas_RP":{
-
-                login:"Tomas_RP",
-
-                password:"",
-
-                character:null,
-
-                createdAt:Date.now()
-
-            }
-
-        }
-
-    };
-
-}
+    const loggedIn =
+        localStorage.getItem(
+            AUTH_KEY
+        ) === "true";
 
 
-/* -------------------------------------------------------
-   LOAD DATA
-------------------------------------------------------- */
+    if(loggedIn){
 
-function loadData(){
-
-    try{
-
-        const saved =
-            localStorage.getItem(STORAGE_KEY);
-
-        if(!saved){
-
-            const fresh =
-                getDefaultData();
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(fresh)
+        const account =
+            localStorage.getItem(
+                ACCOUNT_KEY
             );
 
-            return fresh;
+
+        if(account){
+
+            goToGame();
+
         }
-
-        const parsed =
-            JSON.parse(saved);
-
-        if(!parsed.accounts){
-
-            parsed.accounts =
-                getDefaultData().accounts;
-        }
-
-        return parsed;
-
-    }catch(error){
-
-        console.error(
-            "Storage error:",
-            error
-        );
-
-        return getDefaultData();
 
     }
 
 }
 
 
-/* -------------------------------------------------------
-   GLOBAL DATA
-------------------------------------------------------- */
+/* =========================================================
+   SCREEN
+========================================================= */
 
-window.GTA_DATA = loadData();
+function showScreen(id){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(
+            screen=>{
+                screen.classList.remove(
+                    "active"
+                );
+            }
+        );
 
 
-/* -------------------------------------------------------
-   SAVE
-------------------------------------------------------- */
+    const screen =
+        document.getElementById(id);
 
-function saveData(){
+
+    if(screen){
+
+        screen.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SERVER SELECT
+========================================================= */
+
+function selectServer(server){
+
+    selectedServer =
+        server;
+
+
+    localStorage.setItem(
+        SERVER_KEY,
+        String(server)
+    );
+
+
+    document
+        .querySelectorAll(
+            ".server-card"
+        )
+        .forEach(
+            card=>{
+                card.classList.remove(
+                    "selected"
+                );
+            }
+        );
+
+
+    const card =
+        document.getElementById(
+            "server"+server
+        );
+
+
+    if(card){
+
+        card.classList.add(
+            "selected"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CONTINUE SERVER
+========================================================= */
+
+function continueFromServer(){
+
+    /*
+        Только после выбора сервера
+        открываем авторизацию.
+    */
+
+    if(!selectedServer){
+
+        selectServer(1);
+
+    }
+
+
+    const account =
+        localStorage.getItem(
+            ACCOUNT_KEY
+        );
+
+
+    if(account){
+
+        document.getElementById(
+            "loginAccountName"
+        ).textContent =
+            account;
+
+    }
+
+
+    showScreen(
+        "loginScreen"
+    );
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function login(){
+
+    /*
+        Пока у нас один автономный аккаунт.
+        Пароля нет.
+    */
+
+    const account =
+        localStorage.getItem(
+            ACCOUNT_KEY
+        ) ||
+        "Tomas_RP";
+
+
+    localStorage.setItem(
+        ACCOUNT_KEY,
+        account
+    );
+
+
+    localStorage.setItem(
+        AUTH_KEY,
+        "true"
+    );
+
+
+    localStorage.setItem(
+        SERVER_KEY,
+        "1"
+    );
+
+
+    ensureCharacter();
+
+
+    enterGame();
+
+}
+
+
+/* =========================================================
+   REGISTER
+========================================================= */
+
+function registerAccount(){
+
+    const login =
+        document
+            .getElementById(
+                "registerLogin"
+            )
+            .value
+            .trim();
+
+
+    const name =
+        document
+            .getElementById(
+                "registerName"
+            )
+            .value
+            .trim();
+
+
+    const surname =
+        document
+            .getElementById(
+                "registerSurname"
+            )
+            .value
+            .trim();
+
+
+    if(!login){
+
+        alert(
+            "Введите логин."
+        );
+
+        return;
+
+    }
+
+
+    if(!name){
+
+        alert(
+            "Введите имя персонажа."
+        );
+
+        return;
+
+    }
+
+
+    if(!surname){
+
+        alert(
+            "Введите фамилию персонажа."
+        );
+
+        return;
+
+    }
+
+
+    const character={
+
+        ...DEFAULT_ACCOUNT,
+
+        account:login,
+
+        name:name,
+
+        surname:surname
+
+    };
+
 
     localStorage.setItem(
 
-        STORAGE_KEY,
+        ACCOUNT_KEY,
+
+        login
+
+    );
+
+
+    localStorage.setItem(
+
+        CHARACTER_KEY,
 
         JSON.stringify(
-            window.GTA_DATA
+            character
+        )
+
+    );
+
+
+    localStorage.setItem(
+
+        AUTH_KEY,
+
+        "true"
+
+    );
+
+
+    localStorage.setItem(
+
+        SERVER_KEY,
+
+        "1"
+
+    );
+
+
+    enterGame();
+
+}
+
+
+/* =========================================================
+   CHARACTER
+========================================================= */
+
+function ensureCharacter(){
+
+    const saved =
+        localStorage.getItem(
+            CHARACTER_KEY
+        );
+
+
+    if(saved)
+        return;
+
+
+    const character={
+
+        ...DEFAULT_ACCOUNT,
+
+        account:
+            localStorage.getItem(
+                ACCOUNT_KEY
+            ) || "Tomas_RP"
+
+    };
+
+
+    localStorage.setItem(
+
+        CHARACTER_KEY,
+
+        JSON.stringify(
+            character
         )
 
     );
@@ -1077,359 +1559,97 @@ function saveData(){
 }
 
 
-/* -------------------------------------------------------
-   SCREEN
-------------------------------------------------------- */
-
-function showScreen(id){
-
-    document
-        .querySelectorAll(".screen")
-        .forEach(screen=>{
-
-            screen.classList.remove("active");
-
-        });
-
-    const target =
-        document.getElementById(id);
-
-    if(target){
-
-        target.classList.add("active");
-
-    }
-
-}
-
-
-/* -------------------------------------------------------
-   SERVER
-------------------------------------------------------- */
-
-function selectServer(serverNumber){
-
-    window.GTA_DATA.server =
-        serverNumber;
-
-    saveData();
-
-    showScreen("auth");
-
-}
-
-
-/* -------------------------------------------------------
-   BACK TO SERVERS
-------------------------------------------------------- */
-
-function backToServers(){
-
-    showScreen("servers");
-
-}
-
-
-/* -------------------------------------------------------
-   AUTH TABS
-------------------------------------------------------- */
-
-function switchAuth(type){
-
-    const loginTab =
-        document.getElementById("loginTab");
-
-    const registerTab =
-        document.getElementById("registerTab");
-
-    const loginForm =
-        document.getElementById("loginForm");
-
-    const registerForm =
-        document.getElementById("registerForm");
-
-
-    if(type==="login"){
-
-        loginTab.classList.add("active");
-        registerTab.classList.remove("active");
-
-        loginForm.classList.add("active");
-        registerForm.classList.remove("active");
-
-    }
-
-    else{
-
-        loginTab.classList.remove("active");
-        registerTab.classList.add("active");
-
-        loginForm.classList.remove("active");
-        registerForm.classList.add("active");
-
-    }
-
-}
-
-
-/* -------------------------------------------------------
-   LOGIN
-------------------------------------------------------- */
-
-function login(event){
-
-    event.preventDefault();
-
-
-    const input =
-        document
-        .getElementById("login")
-        .value
-        .trim();
-
-
-    const message =
-        document
-        .getElementById("loginMessage");
-
-
-    message.textContent="";
-
-
-    if(!input){
-
-        message.textContent =
-            "Введите логин.";
-
-        return;
-
-    }
-
-
-    const account =
-        window.GTA_DATA.accounts[input];
-
-
-    if(!account){
-
-        message.textContent =
-            "Аккаунт не найден.";
-
-        return;
-
-    }
-
-
-    /*
-       Пароль пока намеренно
-       не проверяем.
-    */
-
-
-    window.GTA_DATA.currentAccount =
-        input;
-
-
-    saveData();
-
-
-    /*
-       Если персонаж уже создан —
-       сразу открываем игру.
-    */
-
-    if(account.character){
-
-        enterGame();
-
-        return;
-
-    }
-
-
-    /*
-       Если персонажа нет —
-       открываем character.html.
-    */
-
-    window.location.href =
-        "character.html";
-
-}
-
-
-/* -------------------------------------------------------
-   REGISTER
-------------------------------------------------------- */
-
-function register(event){
-
-    event.preventDefault();
-
-
-    const login =
-        document
-        .getElementById("registerLogin")
-        .value
-        .trim();
-
-
-    const password =
-        document
-        .getElementById("registerPassword")
-        .value;
-
-
-    const message =
-        document
-        .getElementById("registerMessage");
-
-
-    message.textContent="";
-
-
-    if(login.length < 3){
-
-        message.textContent =
-            "Логин должен содержать минимум 3 символа.";
-
-        return;
-
-    }
-
-
-    if(window.GTA_DATA.accounts[login]){
-
-        message.textContent =
-            "Такой аккаунт уже существует.";
-
-        return;
-
-    }
-
-
-    /*
-       Создаём аккаунт.
-    */
-
-    window.GTA_DATA.accounts[login]={
-
-        login:login,
-
-        password:password,
-
-        character:null,
-
-        createdAt:Date.now()
-
-    };
-
-
-    window.GTA_DATA.currentAccount =
-        login;
-
-
-    saveData();
-
-
-    /*
-       После регистрации
-       сразу создание персонажа.
-    */
-
-    window.location.href =
-        "character.html";
-
-}
-
-
-/* -------------------------------------------------------
+/* =========================================================
    ENTER GAME
-------------------------------------------------------- */
+========================================================= */
 
 function enterGame(){
 
-    window.location.href =
-        "game.html";
+    const loading =
+        document.getElementById(
+            "loading"
+        );
+
+
+    loading.classList.add(
+        "active"
+    );
+
+
+    setTimeout(
+        ()=>{
+            goToGame();
+        },
+        700
+    );
 
 }
 
 
-/* -------------------------------------------------------
-   LOADING
-------------------------------------------------------- */
+/* =========================================================
+   GAME
+========================================================= */
 
-let loadingStep=0;
-
-const loadingTexts=[
-
-    "Подключение к игровому центру...",
-
-    "Проверка серверов...",
-
-    "Загрузка конфигурации...",
-
-    "Подготовка авторизации..."
-
-];
-
-
-const loadingStatus =
-    document.getElementById(
-        "loadingStatus"
-    );
-
-
-const loadingTimer =
-    setInterval(()=>{
-
-        loadingStep++;
-
-        if(loadingStep <
-           loadingTexts.length){
-
-            loadingStatus.textContent =
-                loadingTexts[loadingStep];
-
-        }
-
-    },450);
-
-
-/* -------------------------------------------------------
-   START
-------------------------------------------------------- */
-
-setTimeout(()=>{
-
-    clearInterval(loadingTimer);
+function goToGame(){
 
     /*
-       ВАЖНО:
-       каждый запуск начинается
-       именно с выбора сервера.
+        replace() важен:
+
+        пользователь не сможет нажать
+        "назад" и случайно вернуться
+        на старый экран авторизации.
     */
 
-    showScreen("servers");
+    window.location.replace(
+        "game.html"
+    );
 
-},1900);
+}
 
 
-/* -------------------------------------------------------
-   EXPORT
-------------------------------------------------------- */
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-window.showScreen =
-    showScreen;
+function logout(){
 
-window.selectServer =
-    selectServer;
+    localStorage.removeItem(
+        AUTH_KEY
+    );
 
-window.enterGame =
-    enterGame;
+    /*
+        Аккаунт оставляем сохранённым,
+        чтобы при следующем входе
+        Tomas_RP был предложен автоматически.
+    */
 
-window.saveData =
-    saveData;
+    window.location.replace(
+        "index.html"
+    );
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+(function init(){
+
+    /*
+        Если сессия уже есть —
+        сразу в игру.
+    */
+
+    checkSession();
+
+
+    /*
+        В противном случае остаёмся
+        на выборе сервера.
+    */
+
+})();
 
 </script>
 
