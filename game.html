@@ -3,25 +3,15 @@
 <head>
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width,
-    initial-scale=1.0,
-    maximum-scale=1.0,
-    user-scalable=no"
->
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
 
-<title>GTA RP WEB — Игра</title>
-
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/game.css">
-<link rel="stylesheet" href="css/mobile.css">
+<title>GTA RP — Server 1</title>
 
 <style>
-
-/* =========================================================
-   GTA RP WEB — GAME
-========================================================= */
 
 :root{
     --green:#4cff72;
@@ -30,7 +20,7 @@
     --panel2:#171c22;
     --border:#303740;
     --muted:#89929e;
-    --danger:#ff4d5a;
+    --blue:#6aa7ff;
     --gold:#ffd75a;
 }
 
@@ -51,6 +41,11 @@ body{
     color:#fff;
     font-family:Arial,Helvetica,sans-serif;
     overflow:hidden;
+}
+
+button,
+input{
+    font:inherit;
 }
 
 
@@ -84,17 +79,16 @@ body{
 
 .game-background:before{
     content:"";
-
     position:absolute;
     inset:0;
 
     background:
         linear-gradient(
             90deg,
-            rgba(0,0,0,.35),
+            rgba(0,0,0,.4),
             transparent 30%,
             transparent 70%,
-            rgba(0,0,0,.35)
+            rgba(0,0,0,.4)
         );
 
     pointer-events:none;
@@ -107,7 +101,6 @@ body{
 
 .topbar{
     position:absolute;
-
     top:0;
     left:0;
     right:0;
@@ -124,14 +117,11 @@ body{
     background:
         linear-gradient(
             180deg,
-            rgba(5,7,9,.92),
-            rgba(5,7,9,.55),
+            rgba(5,7,9,.94),
+            rgba(5,7,9,.5),
             transparent
         );
 }
-
-
-/* LOGO */
 
 .game-logo{
     font-size:22px;
@@ -143,12 +133,8 @@ body{
     color:var(--green);
 }
 
-
-/* SERVER */
-
 .server-info{
     margin-left:20px;
-
     padding-left:20px;
 
     border-left:1px solid #353b42;
@@ -156,31 +142,24 @@ body{
 
 .server-number{
     font-size:12px;
-    font-weight:800;
+    font-weight:900;
 }
 
 .server-status{
     margin-top:3px;
-
     color:var(--green);
-
     font-size:10px;
 }
-
-
-/* TOP RIGHT */
 
 .top-right{
     margin-left:auto;
 
     display:flex;
     align-items:center;
-
     gap:9px;
 }
 
 .top-button{
-
     min-width:43px;
     height:43px;
 
@@ -192,7 +171,6 @@ body{
     border-radius:10px;
 
     background:#090c0ed9;
-
     color:#fff;
 
     cursor:pointer;
@@ -213,7 +191,6 @@ body{
 ========================================================= */
 
 .player-card{
-
     position:absolute;
 
     top:84px;
@@ -223,6 +200,8 @@ body{
 
     z-index:15;
 
+    padding:15px;
+
     background:
         linear-gradient(
             145deg,
@@ -231,10 +210,7 @@ body{
         );
 
     border:1px solid #343b42;
-
     border-radius:13px;
-
-    padding:15px;
 
     box-shadow:0 15px 50px #0008;
 
@@ -248,7 +224,6 @@ body{
 }
 
 .player-avatar{
-
     width:50px;
     height:50px;
 
@@ -259,7 +234,6 @@ body{
     border-radius:10px;
 
     background:#18241c;
-
     border:1px solid #304936;
 
     font-size:27px;
@@ -274,7 +248,6 @@ body{
     margin-top:4px;
 
     color:#7f8995;
-
     font-size:11px;
 }
 
@@ -282,19 +255,11 @@ body{
     margin-top:3px;
 
     color:var(--green);
-
     font-size:11px;
 }
 
-
-/* =========================================================
-   MONEY
-========================================================= */
-
 .money-block{
-
     margin-top:15px;
-
     padding-top:13px;
 
     border-top:1px solid #272e35;
@@ -319,13 +284,8 @@ body{
 }
 
 .bank{
-    color:#6aa7ff;
+    color:var(--blue);
 }
-
-
-/* =========================================================
-   STATUS
-========================================================= */
 
 .status-list{
     margin-top:13px;
@@ -336,53 +296,45 @@ body{
 }
 
 .status-header{
-
     display:flex;
     justify-content:space-between;
 
     color:#858f9a;
-
     font-size:9px;
 }
 
 .status-bar{
-
     width:100%;
     height:5px;
 
     margin-top:4px;
 
     background:#272c31;
-
     border-radius:5px;
 
     overflow:hidden;
 }
 
 .status-fill{
-    width:100%;
     height:100%;
-
+    width:100%;
     background:var(--green);
 }
 
 .status-fill.hunger{
-    width:88%;
     background:#ffbd4a;
 }
 
 .status-fill.energy{
-    width:92%;
-    background:#6aa7ff;
+    background:var(--blue);
 }
 
 
 /* =========================================================
-   CENTER CHARACTER
+   CHARACTER
 ========================================================= */
 
 .character-stage{
-
     position:absolute;
 
     left:50%;
@@ -393,12 +345,10 @@ body{
     z-index:5;
 
     text-align:center;
-
     pointer-events:none;
 }
 
 .character-glow{
-
     width:180px;
     height:180px;
 
@@ -417,7 +367,6 @@ body{
 }
 
 .character-icon{
-
     width:90px;
     height:125px;
 
@@ -429,9 +378,7 @@ body{
 }
 
 .character-head{
-
     position:absolute;
-
     top:0;
 
     width:40px;
@@ -440,12 +387,10 @@ body{
     background:#d7a077;
 
     border:3px solid #111;
-
     border-radius:50%;
 }
 
 .character-body{
-
     width:62px;
     height:75px;
 
@@ -457,7 +402,6 @@ body{
 }
 
 .character-name{
-
     margin-top:8px;
 
     font-size:12px;
@@ -472,7 +416,6 @@ body{
 ========================================================= */
 
 .location-card{
-
     position:absolute;
 
     left:50%;
@@ -489,7 +432,6 @@ body{
     background:#080b0ddd;
 
     border:1px solid #343b42;
-
     border-radius:9px;
 
     backdrop-filter:blur(7px);
@@ -504,7 +446,6 @@ body{
     margin-top:3px;
 
     color:#818b96;
-
     font-size:10px;
 }
 
@@ -514,7 +455,6 @@ body{
 ========================================================= */
 
 .chat{
-
     position:absolute;
 
     left:22px;
@@ -526,7 +466,6 @@ body{
 }
 
 .chat-window{
-
     height:145px;
 
     padding:11px;
@@ -536,7 +475,6 @@ body{
     background:#050708b8;
 
     border-left:2px solid rgba(76,255,114,.45);
-
     border-radius:7px;
 
     font-size:12px;
@@ -550,7 +488,7 @@ body{
 }
 
 .chat-system{
-    color:#4cff72;
+    color:var(--green);
 }
 
 .chat-player{
@@ -562,24 +500,18 @@ body{
 }
 
 .chat-input-row{
-
     display:flex;
-
     margin-top:6px;
 }
 
 .chat-input{
-
     flex:1;
-
     height:37px;
 
     border:1px solid #343b42;
-
     border-radius:7px 0 0 7px;
 
     background:#080b0dd9;
-
     color:white;
 
     padding:0 10px;
@@ -592,15 +524,12 @@ body{
 }
 
 .chat-send{
-
     width:45px;
 
     border:0;
-
     border-radius:0 7px 7px 0;
 
     background:var(--green);
-
     color:#071008;
 
     font-weight:900;
@@ -614,7 +543,6 @@ body{
 ========================================================= */
 
 .minimap{
-
     position:absolute;
 
     right:22px;
@@ -626,17 +554,16 @@ body{
     z-index:20;
 
     border:3px solid rgba(255,255,255,.7);
-
     border-radius:50%;
 
     overflow:hidden;
 
-    box-shadow:
-        0 8px 35px #000b;
+    background:#161c20;
+
+    box-shadow:0 8px 35px #000b;
 }
 
 .minimap img{
-
     width:100%;
     height:100%;
 
@@ -646,7 +573,6 @@ body{
 }
 
 .minimap-dark{
-
     position:absolute;
     inset:0;
 
@@ -659,7 +585,6 @@ body{
 }
 
 .minimap-player{
-
     position:absolute;
 
     left:50%;
@@ -673,7 +598,6 @@ body{
     background:#fff;
 
     border:2px solid #111;
-
     border-radius:50%;
 
     box-shadow:0 0 8px #fff;
@@ -685,7 +609,6 @@ body{
 ========================================================= */
 
 .bottom-menu{
-
     position:absolute;
 
     left:50%;
@@ -696,9 +619,7 @@ body{
     z-index:30;
 
     display:flex;
-
     align-items:center;
-
     gap:7px;
 
     padding:7px;
@@ -706,7 +627,6 @@ body{
     background:#080b0ee8;
 
     border:1px solid #343b42;
-
     border-radius:13px;
 
     box-shadow:0 10px 35px #0008;
@@ -715,12 +635,10 @@ body{
 }
 
 .menu-button{
-
     min-width:72px;
     height:55px;
 
     display:flex;
-
     flex-direction:column;
 
     align-items:center;
@@ -729,11 +647,9 @@ body{
     gap:4px;
 
     background:transparent;
-
     color:#89929e;
 
     border:0;
-
     border-radius:8px;
 
     cursor:pointer;
@@ -743,9 +659,7 @@ body{
 
 .menu-button:hover,
 .menu-button.active{
-
     color:#fff;
-
     background:#1b2228;
 }
 
@@ -760,11 +674,10 @@ body{
 
 
 /* =========================================================
-   NOTIFICATION
+   NOTIFICATIONS
 ========================================================= */
 
 .notifications{
-
     position:absolute;
 
     top:90px;
@@ -776,7 +689,6 @@ body{
 }
 
 .notification{
-
     margin-bottom:8px;
 
     padding:12px;
@@ -784,7 +696,6 @@ body{
     background:#0b0f13ed;
 
     border:1px solid #343b42;
-
     border-left:3px solid var(--green);
 
     border-radius:8px;
@@ -799,6 +710,7 @@ body{
 
 .notification-text{
     margin-top:4px;
+
     color:#89929e;
     font-size:11px;
 }
@@ -819,13 +731,11 @@ body{
 
 
 /* =========================================================
-   FULL MAP
+   MAP
 ========================================================= */
 
 .map-overlay{
-
     position:absolute;
-
     inset:0;
 
     z-index:100;
@@ -845,18 +755,15 @@ body{
 }
 
 .map-window{
-
     width:min(1150px,100%);
     height:min(800px,92vh);
 
     display:flex;
-
     flex-direction:column;
 
     background:#0b0e12;
 
     border:1px solid #3a424a;
-
     border-radius:15px;
 
     overflow:hidden;
@@ -865,11 +772,9 @@ body{
 }
 
 .map-header{
-
     height:60px;
 
     display:flex;
-
     align-items:center;
 
     padding:0 18px;
@@ -885,7 +790,6 @@ body{
 }
 
 .map-close{
-
     margin-left:auto;
 
     width:36px;
@@ -904,7 +808,6 @@ body{
 }
 
 .map-content{
-
     flex:1;
 
     position:relative;
@@ -915,7 +818,6 @@ body{
 }
 
 .map-image{
-
     width:100%;
     height:100%;
 
@@ -927,7 +829,6 @@ body{
 }
 
 .map-side{
-
     position:absolute;
 
     right:15px;
@@ -940,18 +841,17 @@ body{
     background:#080b0ee8;
 
     border:1px solid #353c43;
-
     border-radius:10px;
 }
 
 .map-side-title{
     font-size:12px;
     font-weight:900;
+
     margin-bottom:9px;
 }
 
 .map-place{
-
     width:100%;
 
     padding:9px;
@@ -961,7 +861,6 @@ body{
     text-align:left;
 
     border:0;
-
     border-radius:7px;
 
     background:#181e24;
@@ -977,19 +876,13 @@ body{
     background:#242c33;
 }
 
-.map-place span{
-    margin-right:6px;
-}
-
 
 /* =========================================================
-   QUICK MODAL
+   MODAL
 ========================================================= */
 
 .quick-overlay{
-
     position:absolute;
-
     inset:0;
 
     z-index:90;
@@ -1009,7 +902,6 @@ body{
 }
 
 .quick-window{
-
     width:min(440px,100%);
 
     max-height:80vh;
@@ -1021,18 +913,14 @@ body{
     background:#101419;
 
     border:1px solid #3a424a;
-
     border-radius:14px;
 
     box-shadow:0 30px 90px #000;
 }
 
 .quick-header{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 }
 
@@ -1042,7 +930,6 @@ body{
 }
 
 .quick-close{
-
     background:none;
     border:0;
 
@@ -1054,7 +941,6 @@ body{
 }
 
 .quick-item{
-
     margin-top:10px;
 
     padding:14px;
@@ -1062,7 +948,6 @@ body{
     background:#171c22;
 
     border:1px solid #303740;
-
     border-radius:9px;
 }
 
@@ -1071,7 +956,6 @@ body{
 }
 
 .quick-item small{
-
     display:block;
 
     margin-top:5px;
@@ -1082,7 +966,6 @@ body{
 }
 
 .quick-action{
-
     width:100%;
 
     margin-top:8px;
@@ -1090,7 +973,6 @@ body{
     padding:11px;
 
     border:0;
-
     border-radius:7px;
 
     background:#252c33;
@@ -1235,10 +1117,6 @@ body{
         width:200px;
     }
 
-    .notification{
-        padding:9px;
-    }
-
     .map-overlay{
         padding:8px;
     }
@@ -1255,19 +1133,10 @@ body{
 
 }
 
-
-/* =========================================================
-   EXTRA SMALL
-========================================================= */
-
 @media(max-width:430px){
 
     .player-card{
         width:175px;
-    }
-
-    .money-line{
-        font-size:10px;
     }
 
     .chat{
@@ -1287,21 +1156,14 @@ body{
 <body>
 
 
-<!-- =======================================================
-     GAME SCREEN
-======================================================= -->
-
 <div id="gameScreen">
-
-
-    <!-- BACKGROUND -->
 
     <div class="game-background"></div>
 
 
-    <!-- ===================================================
-         TOP BAR
-    =================================================== -->
+    <!-- =====================================================
+         TOP
+    ====================================================== -->
 
     <div class="topbar">
 
@@ -1321,13 +1183,11 @@ body{
 
         </div>
 
-
         <div class="top-right">
 
             <button
                 class="top-button"
                 onclick="openMap()"
-                title="Карта"
             >
                 🗺️
             </button>
@@ -1335,7 +1195,6 @@ body{
             <button
                 class="top-button"
                 onclick="openQuick('phone')"
-                title="Телефон"
             >
                 📱
             </button>
@@ -1343,7 +1202,6 @@ body{
             <button
                 class="top-button"
                 onclick="openQuick('inventory')"
-                title="Инвентарь"
             >
                 🎒
             </button>
@@ -1351,7 +1209,6 @@ body{
             <button
                 class="top-button"
                 onclick="openQuick('menu')"
-                title="Меню"
             >
                 ☰
             </button>
@@ -1361,9 +1218,9 @@ body{
     </div>
 
 
-    <!-- ===================================================
-         PLAYER CARD
-    =================================================== -->
+    <!-- =====================================================
+         PLAYER
+    ====================================================== -->
 
     <div class="player-card">
 
@@ -1379,7 +1236,7 @@ body{
                     id="playerName"
                     class="player-name"
                 >
-                    Tomas
+                    Tomas RP
                 </div>
 
                 <div
@@ -1389,7 +1246,10 @@ body{
                     ID: 1
                 </div>
 
-                <div class="player-level">
+                <div
+                    id="playerLevel"
+                    class="player-level"
+                >
                     LEVEL 1
                 </div>
 
@@ -1435,7 +1295,9 @@ body{
 
                 <div class="status-header">
                     <span>ЗДОРОВЬЕ</span>
-                    <span>100%</span>
+                    <span id="healthValue">
+                        100%
+                    </span>
                 </div>
 
                 <div class="status-bar">
@@ -1452,13 +1314,18 @@ body{
 
                 <div class="status-header">
                     <span>ГОЛОД</span>
-                    <span>88%</span>
+                    <span id="hungerValue">
+                        88%
+                    </span>
                 </div>
 
                 <div class="status-bar">
+
                     <div
+                        id="hungerBar"
                         class="status-fill hunger"
                     ></div>
+
                 </div>
 
             </div>
@@ -1468,13 +1335,18 @@ body{
 
                 <div class="status-header">
                     <span>ЭНЕРГИЯ</span>
-                    <span>92%</span>
+                    <span id="energyValue">
+                        92%
+                    </span>
                 </div>
 
                 <div class="status-bar">
+
                     <div
+                        id="energyBar"
                         class="status-fill energy"
                     ></div>
+
                 </div>
 
             </div>
@@ -1484,9 +1356,9 @@ body{
     </div>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          CHARACTER
-    =================================================== -->
+    ====================================================== -->
 
     <div class="character-stage">
 
@@ -1506,15 +1378,15 @@ body{
             id="characterName"
             class="character-name"
         >
-            Tomas
+            Tomas RP
         </div>
 
     </div>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          LOCATION
-    =================================================== -->
+    ====================================================== -->
 
     <div class="location-card">
 
@@ -1529,9 +1401,9 @@ body{
     </div>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          CHAT
-    =================================================== -->
+    ====================================================== -->
 
     <div class="chat">
 
@@ -1541,15 +1413,15 @@ body{
         >
 
             <div class="chat-message chat-system">
-                [SERVER] Добро пожаловать на сервер #1!
+                [SERVER] Добро пожаловать на Server #1!
             </div>
 
             <div class="chat-message chat-system">
-                [SERVER] Используйте нижнее меню для навигации.
+                [SERVER] Аккаунт авторизован.
             </div>
 
             <div class="chat-message">
-                [Подсказка] Откройте 🗺️ для просмотра карты.
+                [SERVER] Приятной игры!
             </div>
 
         </div>
@@ -1562,7 +1434,6 @@ body{
                 class="chat-input"
                 placeholder="Введите сообщение..."
                 autocomplete="off"
-                onkeydown="chatKey(event)"
             >
 
             <button
@@ -1577,15 +1448,16 @@ body{
     </div>
 
 
-    <!-- ===================================================
-         MINI MAP
-    =================================================== -->
+    <!-- =====================================================
+         MAP
+    ====================================================== -->
 
     <div class="minimap">
 
         <img
             src="assets/map.jpg"
             alt="Карта"
+            onerror="this.style.display='none'"
         >
 
         <div class="minimap-dark"></div>
@@ -1595,9 +1467,9 @@ body{
     </div>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          NOTIFICATIONS
-    =================================================== -->
+    ====================================================== -->
 
     <div
         id="notifications"
@@ -1605,9 +1477,9 @@ body{
     ></div>
 
 
-    <!-- ===================================================
-         BOTTOM MENU
-    =================================================== -->
+    <!-- =====================================================
+         BOTTOM
+    ====================================================== -->
 
     <div class="bottom-menu">
 
@@ -1615,15 +1487,8 @@ body{
             class="menu-button active"
             onclick="goHome()"
         >
-
-            <span class="menu-icon">
-                🏠
-            </span>
-
-            <span class="menu-text">
-                ГОРОД
-            </span>
-
+            <span class="menu-icon">🏠</span>
+            <span class="menu-text">ГОРОД</span>
         </button>
 
 
@@ -1631,15 +1496,8 @@ body{
             class="menu-button"
             onclick="openMap()"
         >
-
-            <span class="menu-icon">
-                🗺️
-            </span>
-
-            <span class="menu-text">
-                КАРТА
-            </span>
-
+            <span class="menu-icon">🗺️</span>
+            <span class="menu-text">КАРТА</span>
         </button>
 
 
@@ -1647,15 +1505,8 @@ body{
             class="menu-button"
             onclick="openPage('character.html')"
         >
-
-            <span class="menu-icon">
-                👤
-            </span>
-
-            <span class="menu-text">
-                ПЕРСОНАЖ
-            </span>
-
+            <span class="menu-icon">👤</span>
+            <span class="menu-text">ПЕРСОНАЖ</span>
         </button>
 
 
@@ -1663,15 +1514,8 @@ body{
             class="menu-button"
             onclick="openPage('vehicles.html')"
         >
-
-            <span class="menu-icon">
-                🚗
-            </span>
-
-            <span class="menu-text">
-                АВТО
-            </span>
-
+            <span class="menu-icon">🚗</span>
+            <span class="menu-text">АВТО</span>
         </button>
 
 
@@ -1679,23 +1523,16 @@ body{
             class="menu-button"
             onclick="openPage('jobs.html')"
         >
-
-            <span class="menu-icon">
-                💼
-            </span>
-
-            <span class="menu-text">
-                РАБОТА
-            </span>
-
+            <span class="menu-icon">💼</span>
+            <span class="menu-text">РАБОТА</span>
         </button>
 
     </div>
 
 
-    <!-- ===================================================
-         MAP OVERLAY
-    =================================================== -->
+    <!-- =====================================================
+         MAP WINDOW
+    ====================================================== -->
 
     <div
         id="mapOverlay"
@@ -1735,67 +1572,53 @@ body{
                         МЕСТА
                     </div>
 
-
                     <button
                         class="map-place"
                         onclick="mapLocation('Банк')"
                     >
-                        <span>🏦</span>
-                        Банк
+                        🏦 Банк
                     </button>
-
 
                     <button
                         class="map-place"
                         onclick="mapLocation('Автосалон')"
                     >
-                        <span>🚗</span>
-                        Автосалон
+                        🚗 Автосалон
                     </button>
-
 
                     <button
                         class="map-place"
                         onclick="mapLocation('АЗС')"
                     >
-                        <span>⛽</span>
-                        АЗС
+                        ⛽ АЗС
                     </button>
-
 
                     <button
                         class="map-place"
                         onclick="mapLocation('СТО')"
                     >
-                        <span>🔧</span>
-                        СТО
+                        🔧 СТО
                     </button>
-
 
                     <button
                         class="map-place"
                         onclick="mapLocation('Магазин')"
                     >
-                        <span>🛒</span>
-                        Магазины
+                        🛒 Магазин
                     </button>
-
 
                     <button
                         class="map-place"
                         onclick="mapLocation('Работа')"
                     >
-                        <span>💼</span>
-                        Работы
+                        💼 Работы
                     </button>
-
 
                     <button
                         class="map-place"
                         onclick="mapLocation('Дом')"
                     >
-                        <span>🏠</span>
-                        Недвижимость
+                        🏠 Недвижимость
                     </button>
 
                 </div>
@@ -1807,9 +1630,9 @@ body{
     </div>
 
 
-    <!-- ===================================================
-         QUICK MODAL
-    =================================================== -->
+    <!-- =====================================================
+         QUICK WINDOW
+    ====================================================== -->
 
     <div
         id="quickOverlay"
@@ -1847,169 +1670,204 @@ body{
 </div>
 
 
-<!-- =======================================================
-     DATA
-======================================================= -->
-
-<script src="js/data.js"></script>
-
-
 <script>
 
 /* =========================================================
-   GTA RP WEB GAME CORE
+   GTA RP — ЕДИНАЯ СИСТЕМА АВТОРИЗАЦИИ
 ========================================================= */
 
-"use strict";
+
+/*
+    ВАЖНО!
+
+    Эти ключи должны совпадать с index.html.
+*/
+
+const AUTH_KEY =
+    "gta_rp_logged_in";
+
+const ACCOUNT_KEY =
+    "gta_rp_account";
+
+const SERVER_KEY =
+    "gta_rp_server";
+
+const CHARACTER_KEY =
+    "gta_rp_character";
 
 
 /* =========================================================
-   DATA
+   AUTH CHECK
 ========================================================= */
 
-const STORAGE_KEY =
-    "GTA_RP_WEB_ACCOUNT_DATA";
+function checkAuthorization(){
 
-
-let data;
-
-
-try{
-
-    data = JSON.parse(
+    const loggedIn =
         localStorage.getItem(
-            STORAGE_KEY
-        )
-    );
-
-}catch(e){
-
-    data = null;
-
-}
+            AUTH_KEY
+        ) === "true";
 
 
-if(!data){
-
-    data = {
-
-        server:1,
-
-        currentAccount:"Tomas_RP",
-
-        accounts:{
-
-            Tomas_RP:{
-
-                login:"Tomas_RP",
-
-                password:"",
-
-                character:{
-
-                    first:"Tomas",
-
-                    last:"RP",
-
-                    sex:"Мужской",
-
-                    level:1,
-
-                    xp:0,
-
-                    money:10000,
-
-                    bank:50000,
-
-                    health:100,
-
-                    hunger:88,
-
-                    energy:92,
-
-                    car:{
-
-                        name:"Tomas Car",
-
-                        fuel:82,
-
-                        condition:100
-
-                    },
-
-                    inventory:[
-
-                        {
-                            name:"Телефон",
-                            icon:"📱"
-                        },
-
-                        {
-                            name:"Документы",
-                            icon:"📄"
-                        },
-
-                        {
-                            name:"Ключи",
-                            icon:"🔑"
-                        }
-
-                    ]
-
-                }
-
-            }
-
-        }
-
-    };
-
-}
+    const account =
+        localStorage.getItem(
+            ACCOUNT_KEY
+        );
 
 
-function save(){
-
-    localStorage.setItem(
-
-        STORAGE_KEY,
-
-        JSON.stringify(data)
-
-    );
-
-}
+    const server =
+        localStorage.getItem(
+            SERVER_KEY
+        );
 
 
-/* =========================================================
-   CURRENT CHARACTER
-========================================================= */
-
-function getCharacter(){
+    /*
+        Если пользователь не авторизован,
+        отправляем его на index.
+    */
 
     if(
-        !data.currentAccount ||
-        !data.accounts ||
-        !data.accounts[data.currentAccount]
+        !loggedIn ||
+        !account
     ){
 
-        return null;
+        window.location.replace(
+            "index.html"
+        );
+
+        return false;
 
     }
 
-    return data
-        .accounts[data.currentAccount]
-        .character;
+
+    /*
+        Если сервер не выбран,
+        также возвращаемся в index.
+    */
+
+    if(
+        server !== "1"
+    ){
+
+        window.location.replace(
+            "index.html"
+        );
+
+        return false;
+
+    }
+
+
+    return true;
 
 }
 
 
 /* =========================================================
-   ID
+   CHARACTER DATA
+========================================================= */
+
+let character = null;
+
+
+function loadCharacter(){
+
+    const saved =
+        localStorage.getItem(
+            CHARACTER_KEY
+        );
+
+
+    if(saved){
+
+        try{
+
+            character =
+                JSON.parse(saved);
+
+        }catch(error){
+
+            character = null;
+
+        }
+
+    }
+
+
+    /*
+        Если персонаж ещё не создан,
+        создаём его ОДИН раз.
+
+        Это не сбрасывает аккаунт.
+    */
+
+    if(!character){
+
+        character = {
+
+            account:
+                localStorage.getItem(
+                    ACCOUNT_KEY
+                ) || "Tomas_RP",
+
+            name:"Tomas",
+
+            surname:"RP",
+
+            id:1,
+
+            level:1,
+
+            xp:0,
+
+            cash:10000,
+
+            bank:50000,
+
+            health:100,
+
+            hunger:88,
+
+            energy:92,
+
+            job:"Безработный"
+
+        };
+
+
+        saveCharacter();
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+function saveCharacter(){
+
+    localStorage.setItem(
+
+        CHARACTER_KEY,
+
+        JSON.stringify(
+            character
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   PLAYER ID
 ========================================================= */
 
 function getPlayerID(login){
 
-    let sum=0;
+    let total=0;
+
 
     for(
         let i=0;
@@ -2017,13 +1875,14 @@ function getPlayerID(login){
         i++
     ){
 
-        sum +=
+        total +=
             login.charCodeAt(i);
 
     }
 
+
     return (
-        (sum % 9000) + 1
+        (total % 9000) + 1
     );
 
 }
@@ -2033,37 +1892,49 @@ function getPlayerID(login){
    MONEY
 ========================================================= */
 
-function money(value){
+function formatMoney(value){
 
-    return Number(value)
-        .toLocaleString("ru-RU");
+    return Number(
+        value || 0
+    ).toLocaleString(
+        "ru-RU"
+    );
 
 }
 
 
 /* =========================================================
-   UPDATE HUD
+   UPDATE
 ========================================================= */
 
-function updateHUD(){
+function updatePlayer(){
 
-    const ch =
-        getCharacter();
-
-    if(!ch)
+    if(!character)
         return;
+
+
+    const fullName =
+        (
+            character.name ||
+            "Tomas"
+        )+
+        " "+
+        (
+            character.surname ||
+            "RP"
+        );
 
 
     document.getElementById(
         "playerName"
     ).textContent =
-        ch.first+" "+ch.last;
+        fullName;
 
 
     document.getElementById(
         "characterName"
     ).textContent =
-        ch.first+" "+ch.last;
+        fullName;
 
 
     document.getElementById(
@@ -2071,7 +1942,18 @@ function updateHUD(){
     ).textContent =
         "ID: "+
         getPlayerID(
-            data.currentAccount
+            character.account ||
+            "Tomas_RP"
+        );
+
+
+    document.getElementById(
+        "playerLevel"
+    ).textContent =
+        "LEVEL "+
+        (
+            character.level ||
+            1
         );
 
 
@@ -2079,113 +1961,96 @@ function updateHUD(){
         "cash"
     ).textContent =
         "$ "+
-        money(ch.money);
+        formatMoney(
+            character.cash
+        );
 
 
     document.getElementById(
         "bank"
     ).textContent =
         "$ "+
-        money(ch.bank);
+        formatMoney(
+            character.bank
+        );
+
+
+    const health =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                Number(
+                    character.health
+                )
+            )
+        );
+
+
+    const hunger =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                Number(
+                    character.hunger
+                )
+            )
+        );
+
+
+    const energy =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                Number(
+                    character.energy
+                )
+            )
+        );
 
 
     document.getElementById(
         "healthBar"
     ).style.width =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                ch.health
-            )
-        )+"%";
+        health+"%";
 
 
-    const hunger =
-        document.querySelector(
-            ".status-fill.hunger"
-        );
-
-    if(hunger)
-        hunger.style.width =
-            ch.hunger+"%";
+    document.getElementById(
+        "hungerBar"
+    ).style.width =
+        hunger+"%";
 
 
-    const energy =
-        document.querySelector(
-            ".status-fill.energy"
-        );
-
-    if(energy)
-        energy.style.width =
-            ch.energy+"%";
-
-}
+    document.getElementById(
+        "energyBar"
+    ).style.width =
+        energy+"%";
 
 
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-function notify(
-    title,
-    text
-){
-
-    const container =
-        document.getElementById(
-            "notifications"
-        );
+    document.getElementById(
+        "healthValue"
+    ).textContent =
+        health+"%";
 
 
-    const item =
-        document.createElement(
-            "div"
-        );
-
-    item.className =
-        "notification";
+    document.getElementById(
+        "hungerValue"
+    ).textContent =
+        hunger+"%";
 
 
-    item.innerHTML = `
-
-        <div class="notification-title">
-            ${escapeHTML(title)}
-        </div>
-
-        <div class="notification-text">
-            ${escapeHTML(text)}
-        </div>
-
-    `;
-
-
-    container.appendChild(item);
-
-
-    setTimeout(()=>{
-
-        item.style.opacity="0";
-
-        item.style.transform=
-            "translateX(30px)";
-
-        item.style.transition=".25s";
-
-
-        setTimeout(()=>{
-
-            item.remove();
-
-        },250);
-
-    },3500);
+    document.getElementById(
+        "energyValue"
+    ).textContent =
+        energy+"%";
 
 }
 
 
 /* =========================================================
-   CHAT
+   ESCAPE
 ========================================================= */
 
 function escapeHTML(text){
@@ -2215,51 +2080,9 @@ function escapeHTML(text){
 }
 
 
-function addChat(
-    name,
-    text,
-    type=""
-){
-
-    const windowEl =
-        document.getElementById(
-            "chatWindow"
-        );
-
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.className =
-        "chat-message "+
-        type;
-
-
-    div.innerHTML =
-        "["+
-        escapeHTML(name)+
-        "] "+
-        escapeHTML(text);
-
-
-    windowEl.appendChild(div);
-
-
-    while(
-        windowEl.children.length > 8
-    ){
-
-        windowEl.removeChild(
-            windowEl.firstChild
-        );
-
-    }
-
-}
-
+/* =========================================================
+   CHAT
+========================================================= */
 
 function sendChat(){
 
@@ -2277,35 +2100,11 @@ function sendChat(){
         return;
 
 
-    const ch =
-        getCharacter();
-
-
-    if(!ch)
-        return;
-
-
-    if(
-        text.startsWith("/")
-    ){
-
-        addChat(
-            "CMD",
-            text,
-            "chat-command"
-        );
-
-        processCommand(text);
-
-    }else{
-
-        addChat(
-            ch.first,
-            text,
-            "chat-player"
-        );
-
-    }
+    addChat(
+        character.name || "Tomas",
+        text,
+        "chat-player"
+    );
 
 
     input.value="";
@@ -2313,82 +2112,144 @@ function sendChat(){
 }
 
 
-function chatKey(e){
+function addChat(
+    name,
+    text,
+    type=""
+){
 
-    if(
-        e.key ===
-        "Enter"
+    const chat =
+        document.getElementById(
+            "chatWindow"
+        );
+
+
+    const message =
+        document.createElement(
+            "div"
+        );
+
+
+    message.className =
+        "chat-message "+
+        type;
+
+
+    message.innerHTML =
+        "["+
+        escapeHTML(name)+
+        "] "+
+        escapeHTML(text);
+
+
+    chat.appendChild(
+        message
+    );
+
+
+    while(
+        chat.children.length > 8
     ){
 
-        sendChat();
+        chat.removeChild(
+            chat.firstChild
+        );
 
     }
+
+
+    chat.scrollTop =
+        chat.scrollHeight;
 
 }
 
 
+document
+    .getElementById(
+        "chatInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(e){
+
+            if(
+                e.key ===
+                "Enter"
+            ){
+
+                sendChat();
+
+            }
+
+        }
+    );
+
+
 /* =========================================================
-   COMMANDS
+   NOTIFICATION
 ========================================================= */
 
-function processCommand(command){
+function notify(
+    title,
+    text
+){
 
-    const cmd =
-        command
-        .toLowerCase()
-        .split(" ")[0];
-
-
-    if(cmd==="/me"){
-
-        notify(
-            "RP",
-            "Действие персонажа отправлено."
+    const container =
+        document.getElementById(
+            "notifications"
         );
 
-        return;
 
-    }
-
-
-    if(cmd==="/do"){
-
-        notify(
-            "RP",
-            "Описание ситуации отправлено."
+    const item =
+        document.createElement(
+            "div"
         );
 
-        return;
 
-    }
-
-
-    if(cmd==="/help"){
-
-        addChat(
-            "HELP",
-            "/me /do /try /help",
-            "chat-system"
-        );
-
-        return;
-
-    }
+    item.className =
+        "notification";
 
 
-    if(cmd==="/map"){
+    item.innerHTML = `
 
-        openMap();
+        <div class="notification-title">
+            ${escapeHTML(title)}
+        </div>
 
-        return;
+        <div class="notification-text">
+            ${escapeHTML(text)}
+        </div>
 
-    }
+    `;
 
 
-    addChat(
-        "SERVER",
-        "Неизвестная команда.",
-        "chat-system"
+    container.appendChild(
+        item
+    );
+
+
+    setTimeout(
+        ()=>{
+
+            item.style.opacity =
+                "0";
+
+            item.style.transform =
+                "translateX(30px)";
+
+            item.style.transition =
+                ".25s";
+
+
+            setTimeout(
+                ()=>{
+                    item.remove();
+                },
+                250
+            );
+
+        },
+        3500
     );
 
 }
@@ -2404,7 +2265,9 @@ function openMap(){
         .getElementById(
             "mapOverlay"
         )
-        .classList.add("open");
+        .classList.add(
+            "open"
+        );
 
 }
 
@@ -2415,7 +2278,9 @@ function closeMap(){
         .getElementById(
             "mapOverlay"
         )
-        .classList.remove("open");
+        .classList.remove(
+            "open"
+        );
 
 }
 
@@ -2424,10 +2289,12 @@ function mapLocation(name){
 
     closeMap();
 
+
     notify(
         "Карта",
-        "Выбрано место: "+name
+        "Выбрано: "+name
     );
+
 
     addChat(
         "NAV",
@@ -2439,7 +2306,7 @@ function mapLocation(name){
 
 
 /* =========================================================
-   QUICK WINDOWS
+   QUICK
 ========================================================= */
 
 function openQuick(type){
@@ -2449,10 +2316,12 @@ function openQuick(type){
             "quickOverlay"
         );
 
+
     const title =
         document.getElementById(
             "quickTitle"
         );
+
 
     const content =
         document.getElementById(
@@ -2476,11 +2345,15 @@ function openQuick(type){
             <div class="quick-item">
 
                 <strong>
-                    👤 Профиль
+                    👤 Аккаунт
                 </strong>
 
                 <small>
-                    ${escapeHTML(data.currentAccount)}
+                    ${escapeHTML(
+                        localStorage.getItem(
+                            ACCOUNT_KEY
+                        )
+                    )}
                 </small>
 
             </div>
@@ -2489,19 +2362,12 @@ function openQuick(type){
             <div class="quick-item">
 
                 <strong>
-                    🏦 Банк
+                    🖥️ Сервер
                 </strong>
 
                 <small>
-                    Управление банковским счётом.
+                    Server #1
                 </small>
-
-                <button
-                    class="quick-action"
-                    onclick="openPage('bank.html')"
-                >
-                    ОТКРЫТЬ БАНК
-                </button>
 
             </div>
 
@@ -2509,34 +2375,34 @@ function openQuick(type){
             <div class="quick-item">
 
                 <strong>
-                    🛒 Магазин
+                    👤 Персонаж
                 </strong>
 
                 <small>
-                    Покупка предметов.
-                </small>
-
-                <button
-                    class="quick-action"
-                    onclick="openPage('shop.html')"
-                >
-                    ОТКРЫТЬ МАГАЗИН
-                </button>
-
-            </div>
-
-
-            <div class="quick-item">
-
-                <strong>
-                    ⚙️ Настройки
-                </strong>
-
-                <small>
-                    Настройки игры появятся позже.
+                    ${escapeHTML(
+                        character.name+
+                        " "+
+                        character.surname
+                    )}
                 </small>
 
             </div>
+
+
+            <button
+                class="quick-action"
+                onclick="openPage('character.html')"
+            >
+                ПЕРСОНАЖ
+            </button>
+
+
+            <button
+                class="quick-action"
+                onclick="openPage('inventory.html')"
+            >
+                ИНВЕНТАРЬ
+            </button>
 
 
             <button
@@ -2553,40 +2419,51 @@ function openQuick(type){
 
     if(type==="inventory"){
 
-        const ch =
-            getCharacter();
-
-
         title.textContent =
             "Инвентарь";
 
 
-        if(
-            !ch ||
-            !ch.inventory
-        ){
+        content.innerHTML = `
 
-            content.innerHTML =
-                "<div class='quick-item'>Инвентарь пуст.</div>";
+            <div class="quick-item">
 
-            return;
+                <strong>
+                    📱 Телефон
+                </strong>
 
-        }
+                <small>
+                    Личный мобильный телефон.
+                </small>
+
+            </div>
 
 
-        content.innerHTML =
-            ch.inventory.map(item=>`
+            <div class="quick-item">
 
-                <div class="quick-item">
+                <strong>
+                    📄 Документы
+                </strong>
 
-                    <strong>
-                        ${item.icon}
-                        ${escapeHTML(item.name)}
-                    </strong>
+                <small>
+                    Паспорт и документы персонажа.
+                </small>
 
-                </div>
+            </div>
 
-            `).join("");
+
+            <div class="quick-item">
+
+                <strong>
+                    🔑 Ключи
+                </strong>
+
+                <small>
+                    Ключи от личного транспорта.
+                </small>
+
+            </div>
+
+        `;
 
     }
 
@@ -2668,10 +2545,12 @@ function callTaxi(){
 
     closeQuick();
 
+
     notify(
         "Такси",
-        "Такси вызвано. Ожидайте автомобиль."
+        "Такси вызвано."
     );
+
 
     addChat(
         "DISPATCH",
@@ -2683,7 +2562,7 @@ function callTaxi(){
 
 
 /* =========================================================
-   PAGES
+   PAGE
 ========================================================= */
 
 function openPage(page){
@@ -2708,13 +2587,22 @@ function goHome(){
 
 function logout(){
 
-    data.currentAccount =
-        null;
+    /*
+        Удаляем ТОЛЬКО сессию.
 
-    save();
+        Аккаунт и персонаж остаются.
+        Поэтому после повторного входа
+        Tomas_RP никуда не исчезает.
+    */
 
-    window.location.href =
-        "index.html";
+    localStorage.removeItem(
+        AUTH_KEY
+    );
+
+
+    window.location.replace(
+        "index.html"
+    );
 
 }
 
@@ -2725,7 +2613,7 @@ function logout(){
 
 document.addEventListener(
     "keydown",
-    e=>{
+    function(e){
 
         if(
             e.key ===
@@ -2745,23 +2633,32 @@ document.addEventListener(
    START
 ========================================================= */
 
-updateHUD();
+if(
+    checkAuthorization()
+){
 
-save();
+    loadCharacter();
+
+    updatePlayer();
 
 
-/* =========================================================
-   WELCOME
-========================================================= */
-
-setTimeout(()=>{
-
-    notify(
-        "Добро пожаловать",
-        "Вы вошли на сервер GTA RP WEB #1."
+    setTimeout(
+        ()=>{
+            notify(
+                "GTA RP",
+                "Добро пожаловать, "+
+                (
+                    character.name+
+                    " "+
+                    character.surname
+                )+
+                "!"
+            );
+        },
+        500
     );
 
-},700);
+}
 
 </script>
 
