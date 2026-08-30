@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>GTA RP WEB</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#090b0f;
+    color:#fff;
+    overflow:hidden;
+}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+
+.screen{
+    position:fixed;
+    inset:0;
+    display:none;
+}
+.screen.active{display:flex}
+
+/* ================= LOADING ================= */
+
+#loading{
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:
+      radial-gradient(circle at center,#252b35 0,#0b0d11 45%,#050608 100%);
+}
+.logo{
+    font-size:54px;
+    font-weight:900;
+    letter-spacing:5px;
+}
+.logo span{color:#4cff72}
+.loading-sub{
+    color:#9099a8;
+    margin-top:12px;
+    letter-spacing:3px;
+}
+.loader{
+    width:240px;
+    height:4px;
+    background:#252a31;
+    margin-top:35px;
+    overflow:hidden;
+}
+.loader i{
+    display:block;
+    height:100%;
+    width:35%;
+    background:#4cff72;
+    animation:load 1.2s infinite;
+}
+@keyframes load{
+    from{transform:translateX(-120%)}
+    to{transform:translateX(700%)}
+}
+
+/* ================= COMMON ================= */
+
+.center{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+.panel{
+    width:min(440px,100%);
+    background:rgba(17,20,26,.96);
+    border:1px solid #303640;
+    box-shadow:0 20px 80px #000b;
+    border-radius:16px;
+    padding:30px;
+}
+.title{
+    font-size:27px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+.muted{color:#89929f}
+.green{color:#4cff72}
+.small{font-size:13px}
+.field{
+    margin-top:18px;
+}
+.field label{
+    display:block;
+    color:#89929f;
+    font-size:13px;
+    margin-bottom:7px;
+}
+.field input,.field select{
+    width:100%;
+    background:#0c0f14;
+    color:white;
+    border:1px solid #303640;
+    padding:13px;
+    border-radius:9px;
+    outline:none;
+}
+.field input:focus,.field select:focus{border-color:#4cff72}
+.btn{
+    width:100%;
+    padding:14px;
+    border-radius:9px;
+    background:#4cff72;
+    color:#071008;
+    font-weight:800;
+    margin-top:22px;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn.dark{
+    background:#242a32;
+    color:#fff;
+}
+.btn.red{
+    background:#ff4c58;
+    color:white;
+}
+.notice{
+    margin-top:14px;
+    padding:10px;
+    border-radius:8px;
+    background:#0d1117;
+    color:#8f99a7;
+    font-size:13px;
+}
+
+/* ================= SERVER ================= */
+
+#servers{
+    background:
+      linear-gradient(#05070a99,#05070ae8),
+      radial-gradient(circle at 30% 20%,#263d31,#090b0f 55%);
+}
+.server-list{
+    margin-top:25px;
+}
+.server{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:17px;
+    border:1px solid #343b44;
+    border-radius:12px;
+    background:#10141a;
+}
+.server:hover{
+    border-color:#4cff72;
+}
+.server-icon{
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    background:#19231b;
+    border-radius:10px;
+    font-size:23px;
+}
+.server-info{flex:1}
+.server-name{font-weight:800}
+.server-desc{font-size:12px;color:#808a97;margin-top:4px}
+.online{
+    color:#4cff72;
+    font-size:11px;
+    margin-top:5px;
+}
+.server button{
+    background:#4cff72;
+    color:#071008;
+    padding:10px 16px;
+    border-radius:7px;
+    font-weight:800;
+}
+
+/* ================= AUTH ================= */
+
+#auth{
+    background:
+      linear-gradient(120deg,#06080ccc,#0c1015ee),
+      radial-gradient(circle at 70% 20%,#26362b,#07090c);
+}
+.auth-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+.back{
+    color:#8c96a3;
+    background:none;
+}
+.tabs{
+    display:flex;
+    gap:5px;
+    background:#0b0e13;
+    padding:4px;
+    border-radius:9px;
+}
+.tab{
+    flex:1;
+    padding:10px;
+    color:#8d96a2;
+    background:transparent;
+    border-radius:7px;
+}
+.tab.active{
+    color:white;
+    background:#252b33;
+}
+.auth-form{display:none}
+.auth-form.active{display:block}
+
+/* ================= CHARACTER ================= */
+
+#character{
+    background:
+      radial-gradient(circle at 50% 30%,#29342e,#080a0d 60%);
+}
+.char-preview{
+    height:120px;
+    background:linear-gradient(145deg,#13181f,#0a0d11);
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:65px;
+    margin:20px 0;
+}
+
+/* ================= GAME ================= */
+
+#game{
+    background:#101713;
+}
+.game-world{
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(90deg,transparent 49%,#242a27 49%,#242a27 51%,transparent 51%),
+      linear-gradient(0deg,transparent 49%,#242a27 49%,#242a27 51%,transparent 51%),
+      repeating-linear-gradient(0deg,#172019 0 70px,#1c281f 71px 140px);
+    overflow:hidden;
+}
+.game-world:before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:
+      radial-gradient(circle at 15% 20%,#315239 0 5%,transparent 5.5%),
+      radial-gradient(circle at 80% 70%,#315239 0 7%,transparent 7.5%),
+      radial-gradient(circle at 65% 15%,#294531 0 4%,transparent 4.5%);
+    opacity:.8;
+}
+.road-h,.road-v{
+    position:absolute;
+    background:#2a3030;
+}
+.road-h{height:85px;left:0;right:0;top:44%}
+.road-v{width:85px;top:0;bottom:0;left:47%}
+.road-h:after,.road-v:after{
+    content:"";
+    position:absolute;
+    background:#aaa;
+    opacity:.5;
+}
+.road-h:after{
+    height:2px;left:0;right:0;top:41px;
+    background:repeating-linear-gradient(90deg,#ddd 0 40px,transparent 40px 80px);
+}
+.road-v:after{
+    width:2px;top:0;bottom:0;left:41px;
+    background:repeating-linear-gradient(0deg,#ddd 0 40px,transparent 40px 80px);
+}
+.building{
+    position:absolute;
+    background:#30363c;
+    border:2px solid #424b53;
+    border-radius:4px;
+}
+.b1{left:7%;top:12%;width:180px;height:130px}
+.b2{right:8%;top:10%;width:210px;height:145px}
+.b3{left:8%;bottom:10%;width:200px;height:120px}
+.b4{right:9%;bottom:8%;width:180px;height:130px}
+.location{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    color:#e8edf0;
+    font-weight:800;
+    text-shadow:0 2px 4px #000;
+}
+.location span{
+    display:block;
+    font-size:27px;
+    margin-bottom:4px;
+}
+.loc-bank{left:18%;top:30%}
+.loc-shop{right:19%;top:30%}
+.loc-gas{left:20%;bottom:25%}
+.loc-garage{right:20%;bottom:24%}
+
+.player{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:46px;
+    height:46px;
+    transform:translate(-50%,-50%);
+    z-index:20;
+}
+.player-body{
+    width:34px;
+    height:42px;
+    margin:auto;
+    background:#4cff72;
+    border-radius:16px 16px 8px 8px;
+    border:3px solid #09110b;
+    box-shadow:0 4px 15px #000;
+}
+.player-head{
+    position:absolute;
+    width:22px;
+    height:22px;
+    background:#d59c70;
+    border-radius:50%;
+    top:-5px;
+    left:12px;
+    border:2px solid #111;
+}
+.car{
+    position:absolute;
+    width:62px;
+    height:34px;
+    background:#d63f42;
+    border-radius:9px;
+    border:2px solid #111;
+    left:58%;
+    top:61%;
+    z-index:10;
+    box-shadow:0 5px 12px #0008;
+}
+.car:after{
+    content:"";
+    position:absolute;
+    left:12px;right:12px;top:7px;height:15px;
+    background:#1b252d;
+    border-radius:4px;
+}
+.car-label{
+    position:absolute;
+    top:-23px;
+    width:100%;
+    text-align:center;
+    font-size:11px;
+}
+
+/* HUD */
+
+.hud{
+    position:absolute;
+    left:18px;
+    top:18px;
+    z-index:50;
+    width:245px;
+}
+.hud-card{
+    background:#090c0ed9;
+    border:1px solid #353c42;
+    backdrop-filter:blur(10px);
+    border-radius:12px;
+    padding:13px;
+}
+.hud-name{
+    font-weight:800;
+    font-size:16px;
+}
+.hud-id{font-size:11px;color:#89929b;margin-top:3px}
+.money{
+    margin-top:12px;
+    font-size:18px;
+    color:#4cff72;
+    font-weight:800;
+}
+.stat{
+    margin-top:9px;
+}
+.stat-head{
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    color:#919aa5;
+}
+.bar{
+    height:5px;
+    background:#252a2f;
+    border-radius:4px;
+    overflow:hidden;
+    margin-top:4px;
+}
+.bar i{
+    display:block;
+    width:80%;
+    height:100%;
+    background:#4cff72;
+}
+.xp i{width:35%;background:#64a4ff}
+
+.top{
+    position:absolute;
+    top:18px;
+    right:18px;
+    z-index:50;
+    display:flex;
+    gap:8px;
+}
+.icon-btn{
+    min-width:44px;
+    height:44px;
+    background:#090c0ed9;
+    border:1px solid #353c42;
+    color:white;
+    border-radius:10px;
+    font-size:18px;
+}
+.icon-btn:hover{border-color:#4cff72}
+
+.controls{
+    position:absolute;
+    right:18px;
+    bottom:18px;
+    z-index:50;
+    display:grid;
+    grid-template-columns:repeat(3,52px);
+    gap:7px;
+}
+.controls button{
+    height:52px;
+    background:#090c0ed9;
+    border:1px solid #444b51;
+    color:#fff;
+    border-radius:10px;
+    font-weight:800;
+}
+.controls .empty{visibility:hidden}
+
+/* side panel */
+
+.modal{
+    position:absolute;
+    inset:0;
+    z-index:100;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:#0009;
+    padding:18px;
+}
+.modal.show{display:flex}
+.modal-box{
+    width:min(450px,100%);
+    max-height:85vh;
+    overflow:auto;
+    background:#101419;
+    border:1px solid #3a424a;
+    border-radius:15px;
+    padding:22px;
+    box-shadow:0 20px 80px #000;
+}
+.modal-title{
+    display:flex;
+    justify-content:space-between;
+    font-size:22px;
+    font-weight:800;
+}
+.close{
+    background:none;
+    color:#89929e;
+    font-size:22px;
+}
+.option{
+    padding:15px;
+    background:#171c22;
+    border:1px solid #303740;
+    border-radius:10px;
+    margin-top:10px;
+}
+.option strong{display:block;margin-bottom:5px}
+.option small{color:#858f9c}
+.action{
+    width:100%;
+    padding:12px;
+    margin-top:9px;
+    background:#242b32;
+    color:#fff;
+    border-radius:8px;
+}
+.action:hover{background:#313a44}
+.action.green{background:#4cff72;color:#071008}
+.action.red{background:#ff4c58}
+
+.chat{
+    position:absolute;
+    left:18px;
+    bottom:18px;
+    z-index:60;
+    width:330px;
+}
+.chat-log{
+    height:120px;
+    overflow:hidden;
+    background:#080b0dd0;
+    border-radius:9px;
+    padding:10px;
+    font-size:12px;
+    text-shadow:0 1px 2px #000;
+}
+.chat-line{margin-bottom:6px}
+.chat-line b{color:#4cff72}
+.chat-input{
+    display:flex;
+    margin-top:6px;
+}
+.chat-input input{
+    flex:1;
+    background:#080b0ddd;
+    border:1px solid #353c42;
+    color:white;
+    padding:9px;
+    border-radius:7px 0 0 7px;
+    outline:0;
+}
+.chat-input button{
+    background:#4cff72;
+    padding:0 13px;
+    border-radius:0 7px 7px 0;
+}
+
+/* mobile */
+
+@media(max-width:650px){
+    .logo{font-size:38px}
+    .panel{padding:22px}
+    .hud{width:190px;left:9px;top:9px}
+    .hud-card{padding:9px}
+    .money{font-size:15px}
+    .top{top:9px;right:9px}
+    .icon-btn{width:40px;height:40px;min-width:40px}
+    .chat{left:9px;bottom:9px;width:250px}
+    .chat-log{height:90px}
+    .controls{right:9px;bottom:9px}
+    .b1,.b2,.b3,.b4{transform:scale(.7)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOADING ================= -->
+
+<section id="loading" class="screen active">
+    <div class="logo">GTA <span>RP</span></div>
+    <div class="loading-sub">WEB ROLEPLAY</div>
+    <div class="loader"><i></i></div>
+</section>
+
+<!-- ================= SERVER ================= -->
+
+<section id="servers" class="screen">
+    <div class="center">
+        <div class="panel">
+            <div class="title">Выбор сервера</div>
+            <div class="muted small">Выберите сервер, чтобы продолжить</div>
+
+            <div class="server-list">
+                <div class="server">
+                    <div class="server-icon">1</div>
+                    <div class="server-info">
+                        <div class="server-name">GTA RP WEB #1</div>
+                        <div class="server-desc">Основной сервер</div>
+                        <div class="online">● Сервер работает</div>
+                    </div>
+                    <button onclick="selectServer()">ИГРАТЬ</button>
+                </div>
+            </div>
+
+            <div class="notice">
+                Доступен только сервер №1. В дальнейшем сюда можно
+                добавить новые сервера.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= AUTH ================= -->
+
+<section id="auth" class="screen">
+    <div class="center">
+        <div class="panel">
+
+            <div class="auth-head">
+                <div>
+                    <div class="title">Аккаунт</div>
+                    <div class="muted small">
+                        GTA RP WEB #1
+                    </div>
+                </div>
+                <button class="back" onclick="show('servers')">← Серверы</button>
+            </div>
+
+            <div class="tabs">
+                <button id="loginTab" class="tab active" onclick="switchAuth('login')">Вход</button>
+                <button id="regTab" class="tab" onclick="switchAuth('register')">Регистрация</button>
+            </div>
+
+            <form id="loginForm" class="auth-form active" onsubmit="login(event)">
+                <div class="field">
+                    <label>Логин</label>
+                    <input id="loginName" value="Tomas_RP" autocomplete="username">
+                </div>
+
+                <div class="notice">
+                    Тестовый аккаунт <b>Tomas_RP</b> доступен без пароля.
+                </div>
+
+                <button class="btn">ВОЙТИ</button>
+            </form>
+
+            <form id="regForm" class="auth-form" onsubmit="register(event)">
+                <div class="field">
+                    <label>Придумайте логин</label>
+                    <input id="regName" placeholder="Например: Tomas_RP">
+                </div>
+
+                <div class="field">
+                    <label>Пароль</label>
+                    <input id="regPass" type="password" placeholder="Пока можно оставить пустым">
+                </div>
+
+                <button class="btn">СОЗДАТЬ АККАУНТ</button>
+            </form>
+
+            <div id="authMessage" class="notice">
+                Авторизация пока работает автономно.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CHARACTER ================= -->
+
+<section id="character" class="screen">
+    <div class="center">
+        <div class="panel">
+
+            <div class="title">Создание персонажа</div>
+            <div class="muted small">
+                Создайте своего первого персонажа
+            </div>
+
+            <div class="char-preview">👨🏻</div>
+
+            <div class="field">
+                <label>Имя</label>
+                <input id="charFirst" placeholder="Имя">
+            </div>
+
+            <div class="field">
+                <label>Фамилия</label>
+                <input id="charLast" placeholder="Фамилия">
+            </div>
+
+            <div class="field">
+                <label>Пол</label>
+                <select id="charSex">
+                    <option value="Мужской">Мужской</option>
+                    <option value="Женский">Женский</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="createCharacter()">
+                СОЗДАТЬ ПЕРСОНАЖА
+            </button>
+
+            <div class="notice">
+                Персонаж будет сохранён в этом браузере.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= GAME ================= -->
+
+<section id="game" class="screen">
+
+    <div class="game-world">
+        <div class="road-h"></div>
+        <div class="road-v"></div>
+
+        <div class="building b1"></div>
+        <div class="building b2"></div>
+        <div class="building b3"></div>
+        <div class="building b4"></div>
+
+        <div class="location loc-bank">
+            <span>🏦</span>БАНК
+        </div>
+
+        <div class="location loc-shop">
+            <span>🛒</span>МАГАЗИН
+        </div>
+
+        <div class="location loc-gas">
+            <span>⛽</span>АЗС
+        </div>
+
+        <div class="location loc-garage">
+            <span>🔧</span>ГАРАЖ
+        </div>
+
+        <div class="car">
+            <div class="car-label">Tomas Car</div>
+        </div>
+
+        <div class="player">
+            <div class="player-head"></div>
+            <div class="player-body"></div>
+        </div>
+    </div>
+
+    <!-- HUD -->
+    <div class="hud">
+        <div class="hud-card">
+            <div id="hudName" class="hud-name">Tomas</div>
+            <div id="hudId" class="hud-id">ID: 1</div>
+
+            <div id="hudMoney" class="money">$ 10 000</div>
+
+            <div class="stat">
+                <div class="stat-head">
+                    <span>ЗДОРОВЬЕ</span><span>100%</span>
+                </div>
+                <div class="bar"><i></i></div>
+            </div>
+
+            <div class="stat xp">
+                <div class="stat-head">
+                    <span>УРОВЕНЬ 1</span><span>0 / 100 XP</span>
+                </div>
+                <div class="bar"><i></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP -->
+    <div class="top">
+        <button class="icon-btn" onclick="openModal('phone')">📱</button>
+        <button class="icon-btn" onclick="openModal('inventory')">🎒</button>
+        <button class="icon-btn" onclick="openModal('menu')">☰</button>
+    </div>
+
+    <!-- CHAT -->
+    <div class="chat">
+        <div id="chatLog" class="chat-log">
+            <div class="chat-line"><b>SERVER:</b> Добро пожаловать в GTA RP WEB!</div>
+            <div class="chat-line"><b>SERVER:</b> Вы находитесь в городе.</div>
+            <div class="chat-line"><b>Подсказка:</b> Используйте кнопки справа.</div>
+        </div>
+        <div class="chat-input">
+            <input id="chatInput" placeholder="Сообщение..." onkeydown="chatKey(event)">
+            <button onclick="sendChat()">➤</button>
+        </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button class="empty"> </button>
+        <button onclick="move('up')">▲</button>
+        <button class="empty"> </button>
+        <button onclick="move('left')">◀</button>
+        <button onclick="move('down')">▼</button>
+        <button onclick="move('right')">▶</button>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal">
+        <div class="modal-box">
+            <div class="modal-title">
+                <span id="modalTitle">Меню</span>
+                <button class="close" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+/* =========================================================
+   GTA RP WEB — CORE
+========================================================= */
+
+const STORAGE_KEY = "gta_rp_web_data";
+
+let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+
+if(!data){
+    data = {
+        accounts:{
+            Tomas_RP:{
+                login:"Tomas_RP",
+                password:"",
+                character:null
+            }
+        },
+        current:null,
+        server:1
+    };
+    save();
+}
+
+let game = {
+    x:50,
+    y:50
+};
+
+function save(){
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+}
+
+function show(id){
+    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+/* LOADING */
+
+setTimeout(()=>{
+    show("servers");
+},1800);
+
+/* SERVER */
+
+function selectServer(){
+    data.server=1;
+    save();
+    show("auth");
+}
+
+/* AUTH */
+
+function switchAuth(type){
+    document.getElementById("loginTab").classList.toggle("active",type==="login");
+    document.getElementById("regTab").classList.toggle("active",type==="register");
+
+    document.getElementById("loginForm").classList.toggle("active",type==="login");
+    document.getElementById("regForm").classList.toggle("active",type==="register");
+}
+
+function message(text){
+    document.getElementById("authMessage").textContent=text;
+}
+
+function login(e){
+    e.preventDefault();
+
+    const login=document.getElementById("loginName").value.trim();
+
+    if(!login){
+        message("Введите логин.");
+        return;
+    }
+
+    const account=data.accounts[login];
+
+    if(!account){
+        message("Аккаунт не найден. Перейдите во вкладку «Регистрация».");
+        return;
+    }
+
+    data.current=login;
+    save();
+
+    if(account.character){
+        enterGame();
+    }else{
+        show("character");
+    }
+}
+
+function register(e){
+    e.preventDefault();
+
+    const login=document.getElementById("regName").value.trim();
+
+    if(login.length<3){
+        message("Логин должен содержать минимум 3 символа.");
+        return;
+    }
+
+    if(data.accounts[login]){
+        message("Такой аккаунт уже существует.");
+        return;
+    }
+
+    data.accounts[login]={
+        login:login,
+        password:document.getElementById("regPass").value,
+        character:null
+    };
+
+    data.current=login;
+
+    save();
+
+    show("character");
+}
+
+/* CHARACTER */
+
+function createCharacter(){
+
+    const first=document.getElementById("charFirst").value.trim();
+    const last=document.getElementById("charLast").value.trim();
+    const sex=document.getElementById("charSex").value;
+
+    if(first.length<2 || last.length<2){
+        alert("Введите имя и фамилию.");
+        return;
+    }
+
+    data.accounts[data.current].character={
+        first:first,
+        last:last,
+        sex:sex,
+        level:1,
+        xp:0,
+        money:10000,
+        bank:50000,
+        health:100,
+        hunger:100,
+        energy:100,
+        car:{
+            name:"Tomas Car",
+            fuel:82,
+            condition:100
+        },
+        inventory:[
+            {name:"Телефон",icon:"📱"},
+            {name:"Документы",icon:"📄"},
+            {name:"Ключи от автомобиля",icon:"🔑"}
+        ]
+    };
+
+    save();
+    enterGame();
+}
+
+/* GAME */
+
+function enterGame(){
+
+    const ch=data.accounts[data.current].character;
+
+    if(!ch){
+        show("character");
+        return;
+    }
+
+    document.getElementById("hudName").textContent =
+        ch.first+" "+ch.last;
+
+    document.getElementById("hudId").textContent =
+        "ID: "+getID(data.current);
+
+    updateMoney();
+
+    show("game");
+}
+
+function getID(login){
+    let sum=0;
+    for(let i=0;i<login.length;i++){
+        sum+=login.charCodeAt(i);
+    }
+    return (sum%9000)+1;
+}
+
+function updateMoney(){
+    const ch=data.accounts[data.current].character;
+    document.getElementById("hudMoney").textContent =
+        "$ "+formatMoney(ch.money);
+}
+
+function formatMoney(n){
+    return Number(n).toLocaleString("ru-RU");
+}
+
+/* MOVEMENT */
+
+function move(dir){
+
+    const step=4;
+
+    if(dir==="up")game.y-=step;
+    if(dir==="down")game.y+=step;
+    if(dir==="left")game.x-=step;
+    if(dir==="right")game.x+=step;
+
+    game.x=Math.max(5,Math.min(95,game.x));
+    game.y=Math.max(8,Math.min(92,game.y));
+
+    const player=document.querySelector(".player");
+
+    player.style.left=game.x+"%";
+    player.style.top=game.y+"%";
+}
+
+/* MODALS */
+
+function openModal(type){
+
+    const modal=document.getElementById("modal");
+    const title=document.getElementById("modalTitle");
+    const content=document.getElementById("modalContent");
+
+    modal.classList.add("show");
+
+    if(type==="menu"){
+        title.textContent="Игровое меню";
+
+        content.innerHTML=`
+            <div class="option">
+                <strong>👤 Профиль</strong>
+                <small>${data.current}</small>
+            </div>
+
+            <div class="option">
+                <strong>🏦 Банк</strong>
+                <small>Открыть банковский счёт</small>
+                <button class="action" onclick="openModal('bank')">ОТКРЫТЬ</button>
+            </div>
+
+            <div class="option">
+                <strong>💼 Работа</strong>
+                <small>Заработайте деньги в городе</small>
+                <button class="action green" onclick="openModal('jobs')">НАЙТИ РАБОТУ</button>
+            </div>
+
+            <div class="option">
+                <strong>🚗 Автомобиль</strong>
+                <small>Гараж и транспорт</small>
+                <button class="action" onclick="openModal('garage')">ГАРАЖ</button>
+            </div>
+
+            <button class="action red" onclick="logout()">
+                ВЫЙТИ ИЗ АККАУНТА
+            </button>
+        `;
+    }
+
+    if(type==="bank"){
+        const ch=data.accounts[data.current].character;
+
+        title.textContent="Банк";
+
+        content.innerHTML=`
+            <div class="option">
+                <strong>Наличные</strong>
+                <small>$ ${formatMoney(ch.money)}</small>
+            </div>
+
+            <div class="option">
+                <strong>Банковский счёт</strong>
+                <small>$ ${formatMoney(ch.bank)}</small>
+            </div>
+
+            <button class="action green" onclick="deposit()">
+                ПОЛОЖИТЬ $1000
+            </button>
+
+            <button class="action" onclick="withdraw()">
+                СНЯТЬ $1000
+            </button>
+        `;
+    }
+
+    if(type==="jobs"){
+        title.textContent="Работа";
+
+        content.innerHTML=`
+            <div class="option">
+                <strong>🚕 Таксист</strong>
+                <small>Перевезите пассажира и получите $750.</small>
+                <button class="action green" onclick="work('Таксист',750)">
+                    ВЫЙТИ НА СМЕНУ
+                </button>
+            </div>
+
+            <div class="option">
+                <strong>📦 Курьер</strong>
+                <small>Доставка посылок — $500.</small>
+                <button class="action green" onclick="work('Курьер',500)">
+                    ВЫЙТИ НА СМЕНУ
+                </button>
+            </div>
+
+            <div class="option">
+                <strong>🔧 Механик</strong>
+                <small>Ремонт автомобилей — $900.</small>
+                <button class="action green" onclick="work('Механик',900)">
+                    ВЫЙТИ НА СМЕНУ
+                </button>
+            </div>
+        `;
+    }
+
+    if(type==="garage"){
+        const ch=data.accounts[data.current].character;
+
+        title.textContent="Гараж";
+
+        content.innerHTML=`
+            <div class="option">
+                <strong>🚗 ${ch.car.name}</strong>
+                <small>
+                    Топливо: ${ch.car.fuel}%<br>
+                    Состояние: ${ch.car.condition}%
+                </small>
+                <button class="action green" onclick="repairCar()">
+                    ПОЧИНИТЬ — $500
+                </button>
+                <button class="action" onclick="refuel()">
+                    ЗАПРАВИТЬ — $300
+                </button>
+            </div>
+        `;
+    }
+
+    if(type==="inventory"){
+        const ch=data.accounts[data.current].character;
+
+        title.textContent="Инвентарь";
+
+        content.innerHTML=ch.inventory.map(item=>`
+            <div class="option">
+                <strong>${item.icon} ${item.name}</strong>
+            </div>
+        `).join("");
+    }
+
+    if(type==="phone"){
+        title.textContent="Телефон";
+
+        content.innerHTML=`
+            <div class="option">
+                <strong>📞 Контакты</strong>
+                <small>Пока пусто</small>
+            </div>
+
+            <div class="option">
+                <strong>💬 Сообщения</strong>
+                <small>Новых сообщений нет</small>
+            </div>
+
+            <div class="option">
+                <strong>🌐 Интернет</strong>
+                <small>Скоро будет доступен</small>
+            </div>
+        `;
+    }
+}
+
+function closeModal(){
+    document.getElementById("modal").classList.remove("show");
+}
+
+/* ECONOMY */
+
+function deposit(){
+
+    const ch=data.accounts[data.current].character;
+
+    if(ch.money<1000){
+        alert("Недостаточно наличных.");
+        return;
+    }
+
+    ch.money-=1000;
+    ch.bank+=1000;
+
+    save();
+    updateMoney();
+    openModal("bank");
+}
+
+function withdraw(){
+
+    const ch=data.accounts[data.current].character;
+
+    if(ch.bank<1000){
+        alert("Недостаточно денег на счёте.");
+        return;
+    }
+
+    ch.bank-=1000;
+    ch.money+=1000;
+
+    save();
+    updateMoney();
+    openModal("bank");
+}
+
+function work(job,pay){
+
+    const ch=data.accounts[data.current].character;
+
+    ch.money+=pay;
+    ch.xp+=20;
+
+    save();
+    updateMoney();
+
+    addChat("SERVER",`Работа «${job}» завершена. Вы получили $${formatMoney(pay)}.`);
+    closeModal();
+}
+
+/* CAR */
+
+function repairCar(){
+
+    const ch=data.accounts[data.current].character;
+
+    if(ch.money<500){
+        alert("Недостаточно денег.");
+        return;
+    }
+
+    ch.money-=500;
+    ch.car.condition=100;
+
+    save();
+    updateMoney();
+    openModal("garage");
+}
+
+function refuel(){
+
+    const ch=data.accounts[data.current].character;
+
+    if(ch.money<300){
+        alert("Недостаточно денег.");
+        return;
+    }
+
+    ch.money-=300;
+    ch.car.fuel=100;
+
+    save();
+    updateMoney();
+    openModal("garage");
+}
+
+/* CHAT */
+
+function addChat(name,text){
+
+    const log=document.getElementById("chatLog");
+
+    const line=document.createElement("div");
+    line.className="chat-line";
+
+    line.innerHTML="<b>"+escapeHTML(name)+":</b> "+escapeHTML(text);
+
+    log.appendChild(line);
+
+    while(log.children.length>7)
+        log.removeChild(log.firstChild);
+
+    log.scrollTop=log.scrollHeight;
+}
+
+function escapeHTML(str){
+    return str
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
+}
+
+function sendChat(){
+
+    const input=document.getElementById("chatInput");
+    const text=input.value.trim();
+
+    if(!text)return;
+
+    const ch=data.accounts[data.current].character;
+
+    addChat(ch.first,text);
+
+    input.value="";
+}
+
+function chatKey(e){
+    if(e.key==="Enter")
+        sendChat();
+}
+
+/* LOGOUT */
+
+function logout(){
+
+    closeModal();
+
+    data.current=null;
+    save();
+
+    document.getElementById("loginName").value="Tomas_RP";
+
+    show("servers");
+}
+
+/* KEYBOARD */
+
+document.addEventListener("keydown",e=>{
+
+    if(!document.getElementById("game").classList.contains("active"))
+        return;
+
+    if(document.activeElement.tagName==="INPUT")
+        return;
+
+    if(e.key==="ArrowUp" || e.key==="w")
+        move("up");
+
+    if(e.key==="ArrowDown" || e.key==="s")
+        move("down");
+
+    if(e.key==="ArrowLeft" || e.key==="a")
+        move("left");
+
+    if(e.key==="ArrowRight" || e.key==="d")
+        move("right");
+
+    if(e.key==="Escape")
+        closeModal();
+});
+
+/* FIRST RUN */
+
+window.addEventListener("load",()=>{
+
+    if(data.current && data.accounts[data.current] &&
+       data.accounts[data.current].character){
+
+        // намеренно не пропускаем выбор сервера:
+        // пользователь каждый запуск сначала выбирает сервер
+        data.current=null;
+        save();
+    }
+
+});
+</script>
+
+</body>
+</html>
