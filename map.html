@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>GTA RP — Карта</title>
+
+<style>
+
+:root{
+    --green:#4cff72;
+    --bg:#07090c;
+    --panel:#101419;
+    --panel2:#171c22;
+    --border:#303740;
+    --muted:#89929e;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    background:var(--bg);
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+
+    position:fixed;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:68px;
+
+    z-index:100;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 22px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(5,7,9,.98),
+            rgba(5,7,9,.86)
+        );
+
+    border-bottom:1px solid #2c333a;
+}
+
+.logo{
+
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:var(--green);
+}
+
+.title{
+
+    margin-left:25px;
+
+    padding-left:25px;
+
+    border-left:1px solid #353b42;
+
+    font-size:14px;
+    font-weight:800;
+}
+
+.server{
+
+    margin-left:auto;
+
+    color:var(--green);
+
+    font-size:11px;
+}
+
+.close{
+
+    width:38px;
+    height:38px;
+
+    margin-left:18px;
+
+    border:1px solid #3a4148;
+
+    border-radius:8px;
+
+    background:#171c22;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+.close:hover{
+    background:#252c33;
+}
+
+
+/* =========================================================
+   MAP AREA
+========================================================= */
+
+.map-area{
+
+    position:fixed;
+
+    left:0;
+    right:0;
+    top:68px;
+    bottom:0;
+
+    overflow:hidden;
+
+    background:#101418;
+
+    cursor:grab;
+
+    touch-action:none;
+}
+
+.map-area.dragging{
+    cursor:grabbing;
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.map-world{
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:2200px;
+    height:1600px;
+
+    transform-origin:0 0;
+
+    user-select:none;
+}
+
+.map-image{
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:fill;
+
+    pointer-events:none;
+
+    user-select:none;
+}
+
+
+/* =========================================================
+   DARK OVERLAY
+========================================================= */
+
+.map-shade{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 35%,
+            rgba(0,0,0,.22) 100%
+        );
+}
+
+
+/* =========================================================
+   MARKERS
+========================================================= */
+
+.marker{
+
+    position:absolute;
+
+    width:42px;
+    height:42px;
+
+    transform:
+        translate(-50%,-50%);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    border:3px solid white;
+
+    background:#111a;
+
+    box-shadow:
+        0 4px 15px #000b;
+
+    font-size:19px;
+
+    cursor:pointer;
+
+    transition:.15s;
+
+    z-index:10;
+}
+
+.marker:hover{
+
+    transform:
+        translate(-50%,-50%)
+        scale(1.18);
+
+}
+
+.marker-label{
+
+    position:absolute;
+
+    top:45px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    padding:5px 8px;
+
+    white-space:nowrap;
+
+    background:#080b0eea;
+
+    border:1px solid #394149;
+
+    border-radius:5px;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.15s;
+}
+
+.marker:hover .marker-label{
+    opacity:1;
+}
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+.player-marker{
+
+    position:absolute;
+
+    width:18px;
+    height:18px;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:white;
+
+    border:4px solid var(--green);
+
+    box-shadow:
+        0 0 0 5px rgba(76,255,114,.18),
+        0 0 20px rgba(76,255,114,.8);
+
+    z-index:30;
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   LEFT FILTER PANEL
+========================================================= */
+
+.sidebar{
+
+    position:fixed;
+
+    top:86px;
+    left:18px;
+
+    width:225px;
+
+    z-index:90;
+
+    padding:14px;
+
+    background:#090c0eee;
+
+    border:1px solid #343b42;
+
+    border-radius:12px;
+
+    box-shadow:0 12px 40px #0009;
+
+    backdrop-filter:blur(10px);
+}
+
+.sidebar-title{
+
+    font-size:12px;
+    font-weight:900;
+
+    margin-bottom:10px;
+}
+
+.filter{
+
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:9px;
+
+    padding:9px;
+
+    margin-top:5px;
+
+    border:1px solid transparent;
+
+    border-radius:7px;
+
+    background:#151a20;
+
+    color:#d7dce1;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    font-size:11px;
+}
+
+.filter:hover{
+    background:#20272e;
+}
+
+.filter.active{
+    border-color:#3e6047;
+    background:#18251c;
+}
+
+.filter-icon{
+    width:25px;
+    text-align:center;
+    font-size:16px;
+}
+
+.filter-count{
+
+    margin-left:auto;
+
+    color:#707a85;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.controls{
+
+    position:fixed;
+
+    right:18px;
+    bottom:20px;
+
+    z-index:90;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+}
+
+.control{
+
+    width:44px;
+    height:44px;
+
+    border:1px solid #394149;
+
+    border-radius:9px;
+
+    background:#090c0eeb;
+
+    color:white;
+
+    font-size:19px;
+
+    cursor:pointer;
+
+    box-shadow:0 6px 20px #0008;
+}
+
+.control:hover{
+    background:#1b2228;
+    border-color:#59636c;
+}
+
+
+/* =========================================================
+   COORDINATES
+========================================================= */
+
+.coordinates{
+
+    position:fixed;
+
+    right:18px;
+    bottom:20px;
+
+    transform:translateY(52px);
+
+    z-index:80;
+
+    color:#77818c;
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+   INFO PANEL
+========================================================= */
+
+.info{
+
+    position:fixed;
+
+    right:18px;
+    top:86px;
+
+    width:230px;
+
+    z-index:90;
+
+    padding:14px;
+
+    display:none;
+
+    background:#090c0eef;
+
+    border:1px solid #343b42;
+
+    border-radius:11px;
+
+    box-shadow:0 12px 40px #0009;
+
+    backdrop-filter:blur(10px);
+}
+
+.info.open{
+    display:block;
+}
+
+.info-icon{
+
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:#18231c;
+
+    font-size:23px;
+}
+
+.info-title{
+
+    margin-top:10px;
+
+    font-size:14px;
+    font-weight:900;
+}
+
+.info-description{
+
+    margin-top:6px;
+
+    color:#858f9a;
+
+    font-size:11px;
+
+    line-height:1.45;
+}
+
+.info-button{
+
+    width:100%;
+
+    margin-top:12px;
+
+    padding:10px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:var(--green);
+
+    color:#071008;
+
+    font-size:10px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+    .header{
+
+        height:56px;
+
+        padding:0 10px;
+    }
+
+    .logo{
+        font-size:16px;
+    }
+
+    .title{
+
+        margin-left:12px;
+        padding-left:12px;
+
+        font-size:11px;
+    }
+
+    .server{
+        display:none;
+    }
+
+    .close{
+
+        width:34px;
+        height:34px;
+
+        margin-left:10px;
+
+        font-size:19px;
+    }
+
+    .map-area{
+        top:56px;
+    }
+
+    .sidebar{
+
+        top:67px;
+        left:8px;
+
+        width:165px;
+
+        padding:9px;
+
+        max-height:
+            calc(100vh - 130px);
+
+        overflow:auto;
+    }
+
+    .sidebar-title{
+        font-size:10px;
+    }
+
+    .filter{
+        padding:7px;
+
+        font-size:9px;
+    }
+
+    .filter-icon{
+        font-size:13px;
+    }
+
+    .info{
+
+        top:67px;
+        right:8px;
+
+        width:185px;
+
+        padding:10px;
+    }
+
+    .info-title{
+        font-size:12px;
+    }
+
+    .info-description{
+        font-size:9px;
+    }
+
+    .controls{
+        right:8px;
+        bottom:8px;
+    }
+
+    .control{
+        width:39px;
+        height:39px;
+    }
+
+    .coordinates{
+        display:none;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media(max-width:430px){
+
+    .sidebar{
+        width:145px;
+    }
+
+    .filter-count{
+        display:none;
+    }
+
+    .info{
+        width:170px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header class="header">
+
+    <div class="logo">
+        GTA <span>RP</span>
+    </div>
+
+    <div class="title">
+        КАРТА ГОРОДА
+    </div>
+
+    <div class="server">
+        ● SERVER #1
+    </div>
+
+    <button
+        class="close"
+        onclick="goBack()"
+    >
+        ×
+    </button>
+
+</header>
+
+
+<!-- =======================================================
+     FILTERS
+======================================================= -->
+
+<div class="sidebar">
+
+    <div class="sidebar-title">
+        МЕСТА НА КАРТЕ
+    </div>
+
+
+    <button
+        class="filter active"
+        data-category="all"
+        onclick="setCategory('all',this)"
+    >
+
+        <span class="filter-icon">
+            🌐
+        </span>
+
+        <span>
+            Все места
+        </span>
+
+        <span class="filter-count">
+            7
+        </span>
+
+    </button>
+
+
+    <button
+        class="filter active"
+        data-category="bank"
+        onclick="setCategory('bank',this)"
+    >
+
+        <span class="filter-icon">
+            🏦
+        </span>
+
+        <span>
+            Банки
+        </span>
+
+        <span class="filter-count">
+            1
+        </span>
+
+    </button>
+
+
+    <button
+        class="filter active"
+        data-category="car"
+        onclick="setCategory('car',this)"
+    >
+
+        <span class="filter-icon">
+            🚗
+        </span>
+
+        <span>
+            Автосалоны
+        </span>
+
+        <span class="filter-count">
+            1
+        </span>
+
+    </button>
+
+
+    <button
+        class="filter active"
+        data-category="gas"
+        onclick="setCategory('gas',this)"
+    >
+
+        <span class="filter-icon">
+            ⛽
+        </span>
+
+        <span>
+            АЗС
+        </span>
+
+        <span class="filter-count">
+            1
+        </span>
+
+    </button>
+
+
+    <button
+        class="filter active"
+        data-category="service"
+        onclick="setCategory('service',this)"
+    >
+
+        <span class="filter-icon">
+            🔧
+        </span>
+
+        <span>
+            СТО
+        </span>
+
+        <span class="filter-count">
+            1
+        </span>
+
+    </button>
+
+
+    <button
+        class="filter active"
+        data-category="shop"
+        onclick="setCategory('shop',this)"
+    >
+
+        <span class="filter-icon">
+            🛒
+        </span>
+
+        <span>
+            Магазины
+        </span>
+
+        <span class="filter-count">
+            1
+        </span>
+
+    </button>
+
+
+    <button
+        class="filter active"
+        data-category="job"
+        onclick="setCategory('job',this)"
+    >
+
+        <span class="filter-icon">
+            💼
+        </span>
+
+        <span>
+            Работы
+        </span>
+
+        <span class="filter-count">
+            1
+        </span>
+
+    </button>
+
+
+    <button
+        class="filter active"
+        data-category="home"
+        onclick="setCategory('home',this)"
+    >
+
+        <span class="filter-icon">
+            🏠
+        </span>
+
+        <span>
+            Недвижимость
+        </span>
+
+        <span class="filter-count">
+            1
+        </span>
+
+    </button>
+
+</div>
+
+
+<!-- =======================================================
+     MAP
+======================================================= -->
+
+<div
+    id="mapArea"
+    class="map-area"
+>
+
+    <div
+        id="mapWorld"
+        class="map-world"
+    >
+
+        <!-- ПЕРВАЯ КАРТА -->
+
+        <img
+            src="assets/karta.jpg"
+            class="map-image"
+            draggable="false"
+            alt="Карта GTA RP"
+        >
+
+
+        <div class="map-shade"></div>
+
+
+        <!-- ===============================================
+             MARKERS
+        ================================================ -->
+
+
+        <!-- BANK -->
+
+        <div
+            class="marker"
+            data-category="bank"
+            style="left:48%;top:43%;"
+            onclick="showLocation(
+                'Банк',
+                'bank',
+                '🏦',
+                'Главный городской банк. Здесь можно хранить деньги, снимать наличные и выполнять банковские операции.'
+            )"
+        >
+
+            🏦
+
+            <div class="marker-label">
+                Банк
+            </div>
+
+        </div>
+
+
+        <!-- CAR DEALER -->
+
+        <div
+            class="marker"
+            data-category="car"
+            style="left:67%;top:36%;"
+            onclick="showLocation(
+                'Автосалон',
+                'car',
+                '🚗',
+                'Продажа новых автомобилей. Здесь можно приобрести свою первую машину.'
+            )"
+        >
+
+            🚗
+
+            <div class="marker-label">
+                Автосалон
+            </div>
+
+        </div>
+
+
+        <!-- GAS -->
+
+        <div
+            class="marker"
+            data-category="gas"
+            style="left:72%;top:63%;"
+            onclick="showLocation(
+                'АЗС',
+                'gas',
+                '⛽',
+                'Заправочная станция. Здесь можно заправить личный или служебный автомобиль.'
+            )"
+        >
+
+            ⛽
+
+            <div class="marker-label">
+                АЗС
+            </div>
+
+        </div>
+
+
+        <!-- SERVICE -->
+
+        <div
+            class="marker"
+            data-category="service"
+            style="left:34%;top:66%;"
+            onclick="showLocation(
+                'СТО',
+                'service',
+                '🔧',
+                'Станция технического обслуживания автомобилей.'
+            )"
+        >
+
+            🔧
+
+            <div class="marker-label">
+                СТО
+            </div>
+
+        </div>
+
+
+        <!-- SHOP -->
+
+        <div
+            class="marker"
+            data-category="shop"
+            style="left:56%;top:58%;"
+            onclick="showLocation(
+                'Магазин',
+                'shop',
+                '🛒',
+                'Продуктовый магазин. Здесь можно купить еду и различные предметы.'
+            )"
+        >
+
+            🛒
+
+            <div class="marker-label">
+                Магазин
+            </div>
+
+        </div>
+
+
+        <!-- JOB -->
+
+        <div
+            class="marker"
+            data-category="job"
+            style="left:28%;top:39%;"
+            onclick="showLocation(
+                'Центр занятости',
+                'job',
+                '💼',
+                'Здесь можно выбрать доступную работу и получить информацию о вакансиях.'
+            )"
+        >
+
+            💼
+
+            <div class="marker-label">
+                Центр занятости
+            </div>
+
+        </div>
+
+
+        <!-- HOME -->
+
+        <div
+            class="marker"
+            data-category="home"
+            style="left:41%;top:76%;"
+            onclick="showLocation(
+                'Жилой район',
+                'home',
+                '🏠',
+                'Район с жилой недвижимостью. В будущем здесь можно будет покупать и арендовать дома.'
+            )"
+        >
+
+            🏠
+
+            <div class="marker-label">
+                Жилой район
+            </div>
+
+        </div>
+
+
+        <!-- PLAYER -->
+
+        <div
+            id="playerMarker"
+            class="player-marker"
+            style="left:50%;top:50%;"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     INFO
+======================================================= -->
+
+<div
+    id="info"
+    class="info"
+>
+
+    <div
+        id="infoIcon"
+        class="info-icon"
+    >
+        🏦
+    </div>
+
+    <div
+        id="infoTitle"
+        class="info-title"
+    >
+        Банк
+    </div>
+
+    <div
+        id="infoDescription"
+        class="info-description"
+    >
+        Описание.
+    </div>
+
+    <button
+        class="info-button"
+        onclick="buildRoute()"
+    >
+        ПОСТРОИТЬ МАРШРУТ
+    </button>
+
+</div>
+
+
+<!-- =======================================================
+     CONTROLS
+======================================================= -->
+
+<div class="controls">
+
+    <button
+        class="control"
+        onclick="zoomIn()"
+        title="Приблизить"
+    >
+        +
+    </button>
+
+    <button
+        class="control"
+        onclick="zoomOut()"
+        title="Отдалить"
+    >
+        −
+    </button>
+
+    <button
+        class="control"
+        onclick="resetMap()"
+        title="Сбросить"
+    >
+        ⌂
+    </button>
+
+    <button
+        class="control"
+        onclick="locatePlayer()"
+        title="Моё местоположение"
+    >
+        ◎
+    </button>
+
+</div>
+
+
+<div
+    id="coordinates"
+    class="coordinates"
+>
+    X: 50.00 | Y: 50.00 | Z: 0
+</div>
+
+
+<script>
+
+/* =========================================================
+   GTA RP MAP ENGINE
+========================================================= */
+
+"use strict";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const mapArea =
+    document.getElementById(
+        "mapArea"
+    );
+
+const mapWorld =
+    document.getElementById(
+        "mapWorld"
+    );
+
+const playerMarker =
+    document.getElementById(
+        "playerMarker"
+    );
+
+
+/* =========================================================
+   MAP STATE
+========================================================= */
+
+let scale = 0.7;
+
+let offsetX = 0;
+let offsetY = 0;
+
+let dragging = false;
+
+let startX = 0;
+let startY = 0;
+
+let startOffsetX = 0;
+let startOffsetY = 0;
+
+
+/* =========================================================
+   APPLY TRANSFORM
+========================================================= */
+
+function applyTransform(){
+
+    mapWorld.style.transform =
+        `translate(
+            ${offsetX}px,
+            ${offsetY}px
+        )
+        scale(${scale})`;
+
+}
+
+
+/* =========================================================
+   INITIAL POSITION
+========================================================= */
+
+function centerMap(){
+
+    const rect =
+        mapArea.getBoundingClientRect();
+
+    offsetX =
+        (rect.width -
+         2200 * scale) / 2;
+
+    offsetY =
+        (rect.height -
+         1600 * scale) / 2;
+
+    applyTransform();
+
+}
+
+
+/* =========================================================
+   ZOOM
+========================================================= */
+
+function zoomIn(){
+
+    scale += .15;
+
+    if(scale > 2.5)
+        scale = 2.5;
+
+    applyTransform();
+
+}
+
+
+function zoomOut(){
+
+    scale -= .15;
+
+    if(scale < .35)
+        scale = .35;
+
+    applyTransform();
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetMap(){
+
+    scale = .7;
+
+    centerMap();
+
+    closeInfo();
+
+}
+
+
+/* =========================================================
+   MOUSE DRAG
+========================================================= */
+
+mapArea.addEventListener(
+    "mousedown",
+    e=>{
+
+        dragging=true;
+
+        mapArea.classList.add(
+            "dragging"
+        );
+
+        startX=e.clientX;
+        startY=e.clientY;
+
+        startOffsetX=offsetX;
+        startOffsetY=offsetY;
+
+    }
+);
+
+
+window.addEventListener(
+    "mousemove",
+    e=>{
+
+        if(!dragging)
+            return;
+
+        offsetX =
+            startOffsetX +
+            (e.clientX-startX);
+
+        offsetY =
+            startOffsetY +
+            (e.clientY-startY);
+
+        applyTransform();
+
+    }
+);
+
+
+window.addEventListener(
+    "mouseup",
+    ()=>{
+
+        dragging=false;
+
+        mapArea.classList.remove(
+            "dragging"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TOUCH
+========================================================= */
+
+mapArea.addEventListener(
+    "touchstart",
+    e=>{
+
+        if(e.touches.length !== 1)
+            return;
+
+        const t =
+            e.touches[0];
+
+        dragging=true;
+
+        startX=t.clientX;
+        startY=t.clientY;
+
+        startOffsetX=offsetX;
+        startOffsetY=offsetY;
+
+    },
+    {passive:true}
+);
+
+
+mapArea.addEventListener(
+    "touchmove",
+    e=>{
+
+        if(!dragging ||
+           e.touches.length !== 1)
+            return;
+
+        const t =
+            e.touches[0];
+
+        offsetX =
+            startOffsetX +
+            (t.clientX-startX);
+
+        offsetY =
+            startOffsetY +
+            (t.clientY-startY);
+
+        applyTransform();
+
+    },
+    {passive:true}
+);
+
+
+mapArea.addEventListener(
+    "touchend",
+    ()=>{
+
+        dragging=false;
+
+    }
+);
+
+
+/* =========================================================
+   WHEEL ZOOM
+========================================================= */
+
+mapArea.addEventListener(
+    "wheel",
+    e=>{
+
+        e.preventDefault();
+
+        if(e.deltaY < 0)
+            zoomIn();
+
+        else
+            zoomOut();
+
+    },
+    {passive:false}
+);
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+function setCategory(
+    category,
+    button
+){
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(
+            b=>b.classList.remove("active")
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    document
+        .querySelectorAll(".marker")
+        .forEach(marker=>{
+
+            if(
+                category === "all" ||
+                marker.dataset.category === category
+            ){
+
+                marker.style.display =
+                    "flex";
+
+            }else{
+
+                marker.style.display =
+                    "none";
+
+            }
+
+        });
+
+}
+
+
+/* =========================================================
+   LOCATION INFO
+========================================================= */
+
+let selectedLocation=null;
+
+
+function showLocation(
+    title,
+    category,
+    icon,
+    description
+){
+
+    selectedLocation={
+        title,
+        category,
+        icon,
+        description
+    };
+
+
+    document.getElementById(
+        "infoIcon"
+    ).textContent=icon;
+
+
+    document.getElementById(
+        "infoTitle"
+    ).textContent=title;
+
+
+    document.getElementById(
+        "infoDescription"
+    ).textContent=description;
+
+
+    document.getElementById(
+        "info"
+    ).classList.add(
+        "open"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE INFO
+========================================================= */
+
+function closeInfo(){
+
+    document.getElementById(
+        "info"
+    ).classList.remove(
+        "open"
+    );
+
+    selectedLocation=null;
+
+}
+
+
+/* =========================================================
+   ROUTE
+========================================================= */
+
+function buildRoute(){
+
+    if(!selectedLocation)
+        return;
+
+
+    alert(
+        "Маршрут построен до: "+
+        selectedLocation.title
+    );
+
+}
+
+
+/* =========================================================
+   PLAYER LOCATION
+========================================================= */
+
+function locatePlayer(){
+
+    /*
+       Пока позиция тестовая.
+       Позже она будет приходить
+       из игрового состояния персонажа.
+    */
+
+    playerMarker.style.left="50%";
+    playerMarker.style.top="50%";
+
+
+    scale=.9;
+
+
+    const rect =
+        mapArea.getBoundingClientRect();
+
+
+    offsetX =
+        rect.width / 2 -
+        1100 * scale;
+
+
+    offsetY =
+        rect.height / 2 -
+        800 * scale;
+
+
+    applyTransform();
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer &&
+        document.referrer.includes(
+            "game.html"
+        )
+    ){
+
+        history.back();
+
+    }else{
+
+        window.location.href =
+            "game.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   COORDINATES
+========================================================= */
+
+mapArea.addEventListener(
+    "mousemove",
+    e=>{
+
+        const rect =
+            mapArea.getBoundingClientRect();
+
+
+        const worldX =
+            (e.clientX -
+             rect.left -
+             offsetX)
+            /
+            scale;
+
+
+        const worldY =
+            (e.clientY -
+             rect.top -
+             offsetY)
+            /
+            scale;
+
+
+        const x =
+            (
+                worldX /
+                2200 *
+                100
+            ).toFixed(2);
+
+
+        const y =
+            (
+                worldY /
+                1600 *
+                100
+            ).toFixed(2);
+
+
+        document.getElementById(
+            "coordinates"
+        ).textContent =
+            `X: ${x} | Y: ${y} | Z: 0`;
+
+    }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        centerMap();
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(e.key==="Escape"){
+
+            closeInfo();
+
+        }
+
+        if(e.key==="+" || e.key==="="){
+
+            zoomIn();
+
+        }
+
+        if(e.key==="-"){
+
+            zoomOut();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
