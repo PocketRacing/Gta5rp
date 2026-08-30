@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>GTA RP — Работа</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --green:#48f477;
+    --bg:#07090c;
+    --panel:#101419;
+    --panel2:#151a20;
+    --border:#2d343c;
+    --text:#f4f6f7;
+    --muted:#89939d;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(
+            circle at 70% 10%,
+            #18241c 0,
+            transparent 32%
+        ),
+        #07090c;
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+
+/* HEADER */
+
+header{
+    height:68px;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 28px;
+
+    background:#080b0eee;
+
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:var(--green);
+}
+
+.title{
+    margin-left:28px;
+    padding-left:28px;
+
+    border-left:1px solid var(--border);
+
+    font-size:13px;
+    font-weight:800;
+}
+
+.account{
+    margin-left:auto;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+.back{
+    margin-left:18px;
+
+    padding:10px 16px;
+
+    border:1px solid var(--border);
+    border-radius:7px;
+
+    background:#151a20;
+    color:white;
+
+    cursor:pointer;
+
+    font-size:10px;
+    font-weight:900;
+}
+
+.back:hover{
+    background:#20272e;
+}
+
+
+/* MAIN */
+
+main{
+    max-width:1250px;
+    margin:auto;
+
+    padding:30px;
+}
+
+
+/* TOP */
+
+.page-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+
+    margin-bottom:22px;
+}
+
+.page-title{
+    font-size:27px;
+    font-weight:900;
+}
+
+.page-subtitle{
+    margin-top:6px;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+
+/* CURRENT JOB */
+
+.current{
+    display:flex;
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:24px;
+
+    padding:18px;
+
+    border:1px solid #38553f;
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #142119,
+            #101419
+        );
+}
+
+.current-icon{
+
+    width:54px;
+    height:54px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:9px;
+
+    background:#1b2b20;
+
+    font-size:26px;
+}
+
+.current-label{
+
+    color:var(--muted);
+
+    font-size:8px;
+    font-weight:800;
+}
+
+.current-job{
+
+    margin-top:5px;
+
+    font-size:17px;
+    font-weight:900;
+}
+
+.current-status{
+
+    margin-left:auto;
+
+    color:var(--green);
+
+    font-size:9px;
+    font-weight:900;
+}
+
+
+/* FILTERS */
+
+.filters{
+
+    display:flex;
+
+    gap:7px;
+
+    margin-bottom:17px;
+
+    overflow-x:auto;
+}
+
+.filter{
+
+    padding:9px 13px;
+
+    white-space:nowrap;
+
+    border:1px solid var(--border);
+    border-radius:7px;
+
+    background:#151a20;
+    color:#aab2ba;
+
+    cursor:pointer;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.filter:hover{
+    background:#1c2329;
+}
+
+.filter.active{
+
+    border-color:#3c6348;
+
+    background:#18251c;
+
+    color:var(--green);
+}
+
+
+/* JOBS */
+
+.jobs{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+}
+
+
+/* JOB CARD */
+
+.job{
+
+    padding:18px;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    background:var(--panel);
+
+    transition:.15s;
+}
+
+.job:hover{
+
+    transform:translateY(-2px);
+
+    border-color:#414a53;
+
+}
+
+.job-top{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+}
+
+.job-icon{
+
+    width:52px;
+    height:52px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:9px;
+
+    background:#191f25;
+
+    font-size:26px;
+}
+
+.job-name{
+
+    font-size:15px;
+    font-weight:900;
+}
+
+.job-category{
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+
+/* DESCRIPTION */
+
+.job-description{
+
+    min-height:55px;
+
+    margin-top:15px;
+
+    color:#8d969f;
+
+    font-size:10px;
+
+    line-height:1.5;
+}
+
+
+/* STATS */
+
+.job-stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:7px;
+
+    margin-top:14px;
+}
+
+.job-stat{
+
+    padding:9px;
+
+    border-radius:6px;
+
+    background:var(--panel2);
+}
+
+.job-stat-label{
+
+    color:#69737e;
+
+    font-size:7px;
+}
+
+.job-stat-value{
+
+    margin-top:5px;
+
+    font-size:11px;
+    font-weight:900;
+}
+
+
+/* JOB BUTTON */
+
+.job-button{
+
+    width:100%;
+
+    margin-top:13px;
+
+    padding:11px;
+
+    border:1px solid var(--border);
+
+    border-radius:7px;
+
+    background:#171c22;
+    color:white;
+
+    cursor:pointer;
+
+    font-size:9px;
+    font-weight:900;
+}
+
+.job-button:hover{
+    background:#222930;
+}
+
+.job-button.primary{
+
+    border-color:var(--green);
+
+    background:var(--green);
+
+    color:#061008;
+}
+
+.job-button.working{
+
+    border-color:#334039;
+
+    background:#19211c;
+
+    color:var(--green);
+
+    cursor:default;
+}
+
+
+/* REQUIREMENT */
+
+.requirement{
+
+    margin-top:10px;
+
+    color:#6f7882;
+
+    font-size:8px;
+}
+
+
+/* EMPTY */
+
+.empty{
+
+    grid-column:1/-1;
+
+    padding:55px 20px;
+
+    text-align:center;
+
+    border:1px dashed #394149;
+
+    border-radius:11px;
+
+    color:var(--muted);
+}
+
+
+/* MODAL */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:500;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#000b;
+
+    backdrop-filter:blur(5px);
+}
+
+.modal.open{
+    display:flex;
+}
+
+.modal-box{
+
+    width:min(430px,calc(100% - 30px));
+
+    padding:24px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:#101419;
+
+    box-shadow:0 25px 80px #000c;
+}
+
+.modal-title{
+
+    font-size:18px;
+    font-weight:900;
+}
+
+.modal-text{
+
+    margin-top:10px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+.modal-buttons{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+
+    margin-top:20px;
+}
+
+.modal-button{
+
+    padding:11px;
+
+    border:1px solid var(--border);
+
+    border-radius:7px;
+
+    background:#171c22;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:9px;
+
+    font-weight:900;
+}
+
+.modal-button.primary{
+
+    border-color:var(--green);
+
+    background:var(--green);
+
+    color:#061008;
+}
+
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    main{
+        padding:20px;
+    }
+
+    .jobs{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    header{
+        height:58px;
+
+        padding:0 14px;
+    }
+
+    .logo{
+        font-size:17px;
+    }
+
+    .title{
+        display:none;
+    }
+
+    .account{
+        font-size:9px;
+    }
+
+    .back{
+        margin-left:10px;
+        padding:9px;
+    }
+
+    main{
+        padding:14px;
+    }
+
+    .page-top{
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        gap:5px;
+    }
+
+    .page-title{
+        font-size:23px;
+    }
+
+    .jobs{
+        grid-template-columns:1fr;
+    }
+
+    .current{
+        padding:13px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        GTA <span>RP</span>
+    </div>
+
+    <div class="title">
+        ЦЕНТР ЗАНЯТОСТИ
+    </div>
+
+    <div
+        class="account"
+        id="accountName"
+    >
+        Tomas_RP
+    </div>
+
+    <button
+        class="back"
+        onclick="goBack()"
+    >
+        ← НАЗАД
+    </button>
+
+</header>
+
+
+<main>
+
+
+    <div class="page-top">
+
+        <div>
+
+            <div class="page-title">
+                Работа
+            </div>
+
+            <div class="page-subtitle">
+                Выберите профессию и начните зарабатывать
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CURRENT JOB -->
+
+    <div class="current">
+
+        <div
+            class="current-icon"
+            id="currentIcon"
+        >
+            💼
+        </div>
+
+        <div>
+
+            <div class="current-label">
+                ТЕКУЩАЯ РАБОТА
+            </div>
+
+            <div
+                class="current-job"
+                id="currentJob"
+            >
+                Безработный
+            </div>
+
+        </div>
+
+        <div
+            class="current-status"
+            id="currentStatus"
+        >
+            НЕ УСТРОЕН
+        </div>
+
+    </div>
+
+
+    <!-- FILTERS -->
+
+    <div class="filters">
+
+        <button
+            class="filter active"
+            onclick="filterJobs('all',this)"
+        >
+            ВСЕ
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterJobs('transport',this)"
+        >
+            🚚 ТРАНСПОРТ
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterJobs('service',this)"
+        >
+            🔧 СЕРВИС
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterJobs('city',this)"
+        >
+            🏙️ ГОРОД
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterJobs('business',this)"
+        >
+            💼 БИЗНЕС
+        </button>
+
+    </div>
+
+
+    <!-- JOB LIST -->
+
+    <div
+        class="jobs"
+        id="jobs"
+    ></div>
+
+
+</main>
+
+
+<!-- MODAL -->
+
+<div
+    class="modal"
+    id="modal"
+>
+
+    <div class="modal-box">
+
+        <div
+            class="modal-title"
+            id="modalTitle"
+        >
+            Работа
+        </div>
+
+        <div
+            class="modal-text"
+            id="modalText"
+        ></div>
+
+        <div class="modal-buttons">
+
+            <button
+                class="modal-button"
+                onclick="closeModal()"
+            >
+                ОТМЕНА
+            </button>
+
+            <button
+                class="modal-button primary"
+                id="modalAction"
+            >
+                УСТРОИТЬСЯ
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CHARACTER
+========================================================= */
+
+const defaultCharacter={
+
+    account:"Tomas_RP",
+
+    name:"Tomas",
+
+    surname:"RP",
+
+    id:1,
+
+    level:1,
+
+    xp:350,
+
+    cash:15000,
+
+    bank:50000,
+
+    job:"Безработный",
+
+    hunger:82,
+
+    thirst:91,
+
+    vehicle:null
+
+};
+
+
+let character=
+
+    JSON.parse(
+        localStorage.getItem(
+            "gta_rp_character"
+        )
+    )
+    ||
+    defaultCharacter;
+
+
+/* =========================================================
+   JOBS DATABASE
+========================================================= */
+
+const jobs=[
+
+    {
+        id:"taxi",
+        name:"Таксист",
+        icon:"🚕",
+        category:"transport",
+        salary:2500,
+        level:1,
+        description:
+            "Перевозите пассажиров по городу и получайте оплату за выполненные поездки."
+    },
+
+    {
+        id:"bus",
+        name:"Водитель автобуса",
+        icon:"🚌",
+        category:"transport",
+        salary:3200,
+        level:1,
+        description:
+            "Работайте на городском маршруте и перевозите пассажиров между остановками."
+    },
+
+    {
+        id:"truck",
+        name:"Дальнобойщик",
+        icon:"🚛",
+        category:"transport",
+        salary:5000,
+        level:2,
+        description:
+            "Доставляйте грузы между городами. Чем дальше маршрут — тем выше заработок."
+    },
+
+    {
+        id:"mechanic",
+        name:"Механик",
+        icon:"🔧",
+        category:"service",
+        salary:4200,
+        level:2,
+        description:
+            "Ремонтируйте автомобили игроков и обслуживайте транспорт."
+    },
+
+    {
+        id:"courier",
+        name:"Курьер",
+        icon:"📦",
+        category:"service",
+        salary:2800,
+        level:1,
+        description:
+            "Получайте посылки и доставляйте их клиентам по всему городу."
+    },
+
+    {
+        id:"garbage",
+        name:"Работник ЖКХ",
+        icon:"🗑️",
+        category:"city",
+        salary:3000,
+        level:1,
+        description:
+            "Поддерживайте чистоту города и выполняйте задания коммунальной службы."
+    },
+
+    {
+        id:"builder",
+        name:"Строитель",
+        icon:"👷",
+        category:"city",
+        salary:4500,
+        level:2,
+        description:
+            "Выполняйте строительные работы на городских объектах."
+    },
+
+    {
+        id:"security",
+        name:"Охранник",
+        icon:"🛡️",
+        category:"business",
+        salary:3800,
+        level:2,
+        description:
+            "Следите за безопасностью объектов и предотвращайте нарушения."
+    },
+
+    {
+        id:"delivery",
+        name:"Водитель доставки",
+        icon:"🚚",
+        category:"business",
+        salary:3600,
+        level:1,
+        description:
+            "Доставляйте товары магазинам и предприятиям города."
+    },
+
+    {
+        id:"fisher",
+        name:"Рыбак",
+        icon:"🎣",
+        category:"service",
+        salary:2200,
+        level:1,
+        description:
+            "Отправляйтесь на водоёмы и продавайте пойманную рыбу."
+    },
+
+    {
+        id:"farmer",
+        name:"Фермер",
+        icon:"🌾",
+        category:"city",
+        salary:3500,
+        level:1,
+        description:
+            "Работайте на ферме, собирайте урожай и выполняйте сельскохозяйственные задания."
+    },
+
+    {
+        id:"pilot",
+        name:"Пилот",
+        icon:"✈️",
+        category:"transport",
+        salary:7500,
+        level:5,
+        description:
+            "Высокооплачиваемая работа для опытных игроков. Выполняйте авиарейсы."
+    }
+
+];
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderJobs(category="all"){
+
+    const container=
+        document.getElementById(
+            "jobs"
+        );
+
+    container.innerHTML="";
+
+
+    const filtered=
+
+        jobs.filter(job=>{
+
+            return category==="all"
+                ||
+                job.category===category;
+
+        });
+
+
+    if(filtered.length===0){
+
+        container.innerHTML=`
+
+            <div class="empty">
+                В этой категории пока нет доступных работ.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach(job=>{
+
+        const card=
+            document.createElement(
+                "div"
+            );
+
+        card.className="job";
+
+
+        const working=
+            character.job===job.name;
+
+
+        const levelOK=
+            character.level>=job.level;
+
+
+        card.innerHTML=`
+
+            <div class="job-top">
+
+                <div class="job-icon">
+                    ${job.icon}
+                </div>
+
+                <div>
+
+                    <div class="job-name">
+                        ${job.name}
+                    </div>
+
+                    <div class="job-category">
+                        ${categoryName(job.category)}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="job-description">
+                ${job.description}
+            </div>
+
+
+            <div class="job-stats">
+
+                <div class="job-stat">
+
+                    <div class="job-stat-label">
+                        ОПЛАТА
+                    </div>
+
+                    <div class="job-stat-value">
+                        ${money(job.salary)}
+                    </div>
+
+                </div>
+
+
+                <div class="job-stat">
+
+                    <div class="job-stat-label">
+                        ТРЕБУЕТСЯ
+                    </div>
+
+                    <div class="job-stat-value">
+                        ${job.level} ур.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="requirement">
+
+                ${levelOK
+                    ? "✓ Требования выполнены"
+                    : "🔒 Требуется уровень "+job.level}
+
+            </div>
+
+
+            <button
+                class="job-button
+                ${working ? "working" :
+                    levelOK ? "primary" : ""}"
+
+                ${working || !levelOK
+                    ? "disabled"
+                    : ""}
+
+                onclick="applyJob('${job.id}')"
+            >
+
+                ${
+                    working
+                    ? "✓ ВЫ УЖЕ РАБОТАЕТЕ"
+                    : levelOK
+                    ? "УСТРОИТЬСЯ НА РАБОТУ"
+                    : "НЕДОСТУПНО"
+                }
+
+            </button>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   CATEGORY NAME
+========================================================= */
+
+function categoryName(category){
+
+    const names={
+
+        transport:"Транспорт",
+
+        service:"Сервис",
+
+        city:"Городские службы",
+
+        business:"Бизнес"
+
+    };
+
+    return names[category] || "Работа";
+
+}
+
+
+/* =========================================================
+   MONEY
+========================================================= */
+
+function money(value){
+
+    return "$ "+
+        Number(value)
+        .toLocaleString("ru-RU");
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+let currentFilter="all";
+
+
+function filterJobs(
+    category,
+    button
+){
+
+    currentFilter=category;
+
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(
+            b=>b.classList.remove("active")
+        );
+
+
+    button.classList.add("active");
+
+
+    renderJobs(category);
+
+}
+
+
+/* =========================================================
+   APPLY
+========================================================= */
+
+function applyJob(id){
+
+    const job=
+        jobs.find(
+            j=>j.id===id
+        );
+
+
+    if(!job)
+        return;
+
+
+    if(character.level<job.level){
+
+        showModal(
+
+            "Работа недоступна",
+
+            `Для работы «${job.name}»
+             требуется ${job.level} уровень.
+             Ваш уровень: ${character.level}.`,
+
+            "ПОНЯТНО",
+
+            closeModal
+
+        );
+
+        return;
+
+    }
+
+
+    showModal(
+
+        `Устроиться: ${job.name}`,
+
+        `
+        Вы действительно хотите устроиться
+        на работу «${job.name}»?
+
+        <br><br>
+
+        Оплата: <b>${money(job.salary)}</b>
+        за выполненное задание.
+
+        <br><br>
+
+        После устройства текущая работа
+        персонажа изменится.
+        `,
+
+        "УСТРОИТЬСЯ",
+
+        ()=>{
+
+            character.job=
+                job.name;
+
+
+            localStorage.setItem(
+
+                "gta_rp_character",
+
+                JSON.stringify(character)
+
+            );
+
+
+            updateCurrent();
+
+            closeModal();
+
+            renderJobs(
+                currentFilter
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =========================================================
+   CURRENT JOB
+========================================================= */
+
+function updateCurrent(){
+
+    document.getElementById(
+        "currentJob"
+    ).textContent=
+        character.job;
+
+
+    if(
+        character.job===
+        "Безработный"
+    ){
+
+        document.getElementById(
+            "currentStatus"
+        ).textContent=
+            "НЕ УСТРОЕН";
+
+        document.getElementById(
+            "currentIcon"
+        ).textContent=
+            "💼";
+
+    }else{
+
+        document.getElementById(
+            "currentStatus"
+        ).textContent=
+            "● РАБОТАЕТЕ";
+
+        const job=
+            jobs.find(
+                j=>j.name===character.job
+            );
+
+        if(job){
+
+            document.getElementById(
+                "currentIcon"
+            ).textContent=
+                job.icon;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function showModal(
+    title,
+    text,
+    button,
+    action
+){
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent=title;
+
+
+    document.getElementById(
+        "modalText"
+    ).innerHTML=text;
+
+
+    const actionButton=
+        document.getElementById(
+            "modalAction"
+        );
+
+
+    actionButton.textContent=
+        button;
+
+
+    actionButton.onclick=
+        action;
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add("open");
+
+}
+
+
+function closeModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove("open");
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    window.location.href=
+        "character.html";
+
+}
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(e.key==="Escape")
+            closeModal();
+
+    }
+);
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.getElementById(
+    "accountName"
+).textContent=
+    character.account;
+
+updateCurrent();
+
+renderJobs();
+
+</script>
+
+</body>
+</html>
